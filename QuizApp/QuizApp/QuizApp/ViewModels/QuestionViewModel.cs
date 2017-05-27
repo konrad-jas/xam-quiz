@@ -16,16 +16,16 @@ namespace QuizApp.ViewModels
 		public QuestionViewModel(INavigationService navigationService)
 		{
 			_navigationService = navigationService;
-			Answears = new[]
-			{
-				new AnswearNO {Answer = "first"},
-				new AnswearNO {Answer = "second"},
-				new AnswearNO {Answer = "third"},
-				new AnswearNO {Answer = "fourth"}
-			};
 			Question = "To be, or not to be?";
 			_confirmAnswearCommand = new Command(ConfirmAnswearAction, AnyAnswearSelected);
 			SelectAnswearCommand = new Command<AnswearNO>(SelectAnswearAction);
+			Answears = new[]
+			{
+				new AnswearNO {Answer = "first", SelectedCommand = SelectAnswearCommand},
+				new AnswearNO {Answer = "second", SelectedCommand = SelectAnswearCommand},
+				new AnswearNO {Answer = "third", SelectedCommand = SelectAnswearCommand},
+				new AnswearNO {Answer = "fourth", SelectedCommand = SelectAnswearCommand}
+			};
 		}
 
 		public string Question { get; set; }
