@@ -21,10 +21,10 @@ namespace QuizApp.ViewModels
 			SelectAnswearCommand = new Command<AnswearNO>(SelectAnswearAction);
 			Answears = new[]
 			{
-				new AnswearNO {Answer = "first", SelectedCommand = SelectAnswearCommand},
-				new AnswearNO {Answer = "second", SelectedCommand = SelectAnswearCommand},
-				new AnswearNO {Answer = "third", SelectedCommand = SelectAnswearCommand},
-				new AnswearNO {Answer = "fourth", SelectedCommand = SelectAnswearCommand}
+				new AnswearNO {Answear = "first", SelectedCommand = SelectAnswearCommand},
+				new AnswearNO {Answear = "second", SelectedCommand = SelectAnswearCommand},
+				new AnswearNO {Answear = "third", SelectedCommand = SelectAnswearCommand},
+				new AnswearNO {Answear = "fourth", SelectedCommand = SelectAnswearCommand}
 			};
 		}
 

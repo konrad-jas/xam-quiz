@@ -5,6 +5,7 @@ using System.Text;
 using Ninject;
 using Ninject.Modules;
 using QuizApp.Utility;
+using QuizApp.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,9 +21,16 @@ namespace QuizApp
 	        var kernel = new StandardKernel();
 	        Bootstrapper._initialize(kernel);
 	        Resolver = kernel;
+	        SetInitialView();
         }
 
-        public static StandardKernel Resolver { get; private set; }
+	    private async void SetInitialView()
+	    {
+			var navigationService = Resolver.Get<INavigationService>();
+		    await navigationService.ShowViewModel<QuestionViewModel>();
+	    }
+
+	    public static StandardKernel Resolver { get; private set; }
 
         protected override void OnStart()
         {
