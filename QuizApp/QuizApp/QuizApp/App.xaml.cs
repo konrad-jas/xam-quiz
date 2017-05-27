@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Ninject;
+using Ninject.Modules;
+using QuizApp.Utility;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace QuizApp
 {
     public partial class App : Application
@@ -12,9 +16,13 @@ namespace QuizApp
         public App()
         {
             InitializeComponent();
-
-            MainPage = new QuizApp.MainPage();
+	        MainPage = new NavigationPage();
+	        var kernel = new StandardKernel();
+	        Bootstrapper._initialize(kernel);
+	        Resolver = kernel;
         }
+
+        public static StandardKernel Resolver { get; private set; }
 
         protected override void OnStart()
         {
