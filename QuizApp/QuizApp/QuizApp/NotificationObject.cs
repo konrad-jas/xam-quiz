@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
-namespace QuizApp.ViewModels.Base
+namespace QuizApp
 {
 	public class NotificationObject : INotifyPropertyChanged
 	{
