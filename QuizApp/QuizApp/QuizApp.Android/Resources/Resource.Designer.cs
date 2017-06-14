@@ -26,8 +26,8 @@ namespace QuizApp.Droid
 		
 		public static void UpdateIdValues()
 		{
-			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::QuizApp.Droid.Resource.Attribute.actionBarSize;
 			global::ModernHttpClient.Resource.String.library_name = global::QuizApp.Droid.Resource.String.library_name;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::QuizApp.Droid.Resource.Attribute.actionBarSize;
 		}
 		
 		public partial class Animation
