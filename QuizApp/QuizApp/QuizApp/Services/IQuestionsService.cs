@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using QuizApp.POs;
+using QuizApp.Core.POs;
 
-namespace QuizApp.Services
+namespace QuizApp.Core.Services
 {
 	public interface IQuestionsService
 	{

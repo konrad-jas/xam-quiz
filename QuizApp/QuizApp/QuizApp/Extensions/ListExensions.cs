@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace QuizApp.Extensions
+namespace QuizApp.Core.Extensions
 {
 	public static class ListExensions
 	{

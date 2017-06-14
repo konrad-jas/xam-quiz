@@ -1,4 +1,4 @@
-﻿namespace QuizApp
+﻿namespace QuizApp.Core
 {
 	public static class ExternalServicesURIs
 	{

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<core:MvxContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QuizApp.Views.QuestionView">
+             xmlns:core="clr-namespace:MvvmCross.Forms.Core;assembly=MvvmCross.Forms"
+             x:Class="QuizApp.Core.Pages.QuestionPage">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"></RowDefinition>
@@ -9,10 +10,10 @@
 			<RowDefinition Height="50"></RowDefinition>
 		</Grid.RowDefinitions>
 		<Label Text="{Binding Question}" Margin="10, 10"/>
-		<ListView ItemsSource="{Binding Answears}" Grid.Row="1">
+		<ListView ItemsSource="{Binding Answers}" Grid.Row="1">
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<TextCell Text="{Binding Answear}"
+					<TextCell Text="{Binding Answer}"
 							Command="{Binding SelectedCommand}"
 							CommandParameter="{Binding }"
 							TextColor="Black">
@@ -20,6 +21,6 @@
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>
-		<Button Grid.Row="2" Text="Select answer" Command="{Binding ConfirmAnswearCommand}"/>
+		<Button Grid.Row="2" Text="Select answer" Command="{Binding ConfirmAnswerCommand}"/>
 	</Grid>
-</ContentPage>
+</core:MvxContentPage>

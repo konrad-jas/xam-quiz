@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace QuizApp.POs
+namespace QuizApp.Core.POs
 {
 	public class QuestionPO
 	{

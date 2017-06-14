@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace QuizApp.DTOs
+namespace QuizApp.Core.DTOs
 {
 	public class TriviaQuestionDTO
 	{
