@@ -6,6 +6,7 @@ using MvvmCross.Platform;
 using MvvmCross.Platform.IoC;
 using QuizApp.Core.ViewModels;
 using QuizApp.Core.Services;
+using QuizApp.Core.Services.Impl;
 using Refit;
 
 namespace QuizApp.Core
@@ -24,6 +25,7 @@ namespace QuizApp.Core
 				BaseAddress = new Uri(ExternalServicesURIs.TriviaServiceBaseURI)
 			};
 			Mvx.LazyConstructAndRegisterSingleton(() => RestService.For<ITriviaServiceClient>(client));
+			Mvx.LazyConstructAndRegisterSingleton<ITriviaServiceProxy, TriviaServiceProxy>();
 
 			RegisterAppStart<CategoriesViewModel>();
 		}

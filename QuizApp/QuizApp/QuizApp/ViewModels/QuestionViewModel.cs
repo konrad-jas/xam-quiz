@@ -3,13 +3,17 @@ using System.Linq;
 using QuizApp.Core.Services;
 using System.Threading.Tasks;
 using MvvmCross.Core.ViewModels;
+using QuizApp.Core.Enums;
+using QuizApp.Core.NavObjects;
 using QuizApp.Core.POs;
 
 namespace QuizApp.Core.ViewModels
 {
-	public class QuestionViewModel : MvxViewModel
+	public class QuestionViewModel : MvxViewModel<QuestionNavObject>
 	{
 		private readonly IQuestionsService _questionsService;
+		private int _categoryId;
+		private string _categoryName;
 
 		public QuestionViewModel(IQuestionsService questionsService)
 		{
@@ -19,6 +23,12 @@ namespace QuizApp.Core.ViewModels
 			ConfirmAnswerCommand = new MvxCommand(ConfirmAnswerAction, AnyAnswerSelected);
 
 			Answers = new List<AnswerPO>();
+		}
+
+		public override async Task Initialize(QuestionNavObject parameter)
+		{
+			_categoryId = parameter.CategoryId;
+			_categoryName = parameter.CategoryName;
 		}
 
 		public override async void Start()
@@ -77,7 +87,7 @@ namespace QuizApp.Core.ViewModels
 
 		private async Task LoadQuestion()
 		{
-			var question = await _questionsService.Get();
+			var question = await _questionsService.GetQuestion(_categoryId, QuestionDifficulty.Medium);
 			if (question == null)
 				return;
 

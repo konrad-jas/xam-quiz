@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MvvmCross.Core.Navigation;
 using MvvmCross.Core.ViewModels;
+using QuizApp.Core.NavObjects;
 using QuizApp.Core.POs;
 using QuizApp.Core.Services;
 
@@ -54,7 +55,14 @@ namespace QuizApp.Core.ViewModels
 		public IMvxAsyncCommand ConfirmCategoryCommand { get; }
 		private async Task ConfirmCategoryAction()
 		{
-			await _navigationService.Navigate<QuestionViewModel>();
+			var selectedCategory = Categories.Single(x => x.Selected);
+			var navObject = new QuestionNavObject
+			{
+				CategoryId = selectedCategory.Id,
+				CategoryName = selectedCategory.Name
+			};
+
+			await _navigationService.Navigate<QuestionViewModel, QuestionNavObject>(navObject);
 		}
 
 		private bool AnyCategorySelected()
