@@ -19,14 +19,13 @@ namespace QuizApp.Core
 				.AsInterfaces()
 				.RegisterAsLazySingleton();
 
-
 			var client = new HttpClient(new NativeMessageHandler())
 			{
 				BaseAddress = new Uri(ExternalServicesURIs.TriviaServiceBaseURI)
 			};
 			Mvx.LazyConstructAndRegisterSingleton(() => RestService.For<ITriviaServiceClient>(client));
 
-			RegisterAppStart<QuestionViewModel>();
+			RegisterAppStart<CategoriesViewModel>();
 		}
 	}
 }
