@@ -1,10 +1,9 @@
-﻿using MvvmCross.Forms.Core;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms.Xaml;
 
 namespace QuizApp.Core.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class QuestionPage : MvxContentPage
+	public partial class QuestionPage
 	{
 		public QuestionPage()
 		{
