@@ -11,10 +11,6 @@ namespace QuizApp.Core.Services.Impl
 			{
 				new CategoryPO
 				{
-					Name = "Any Category"
-				},
-				new CategoryPO
-				{
 					Id = 9,
 					Name = "General Knowledge"
 				},
