@@ -32,8 +32,9 @@ namespace QuizApp.Core.ViewModels
 			get { return _question; }
 			set
 			{
-				SetProperty(ref _question, value, "Question");
+				SetProperty(ref _question, value);
 			}
+
 		}
 
 		private IEnumerable<AnswerPO> _answers;
@@ -42,7 +43,7 @@ namespace QuizApp.Core.ViewModels
 			get { return _answers; }
 			set
 			{
-				SetProperty(ref _answers, value, "Answers");
+				SetProperty(ref _answers, value);
 			}
 		}
 
