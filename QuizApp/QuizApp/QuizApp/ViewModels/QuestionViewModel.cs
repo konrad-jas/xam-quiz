@@ -1,40 +1,29 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Input;
-using QuizApp.NotificationObjects;
-using QuizApp.Utility;
-using QuizApp.ViewModels.Base;
-using Xamarin.Forms;
-using QuizApp.Services;
+using QuizApp.Core.Services;
 using System.Threading.Tasks;
+using MvvmCross.Core.ViewModels;
+using QuizApp.Core.POs;
 
-namespace QuizApp.ViewModels
+namespace QuizApp.Core.ViewModels
 {
-	public class QuestionViewModel : BaseViewModel
+	public class QuestionViewModel : MvxViewModel
 	{
-		private readonly INavigationService _navigationService;
 		private readonly IQuestionsService _questionsService;
 
-		private readonly Command _confirmAnswearCommand;
-
-		public QuestionViewModel(INavigationService navigationService, IQuestionsService questionsService)
+		public QuestionViewModel(IQuestionsService questionsService)
 		{
-			_navigationService = navigationService;
 			_questionsService = questionsService;
 
-			_confirmAnswearCommand = new Command(ConfirmAnswearAction, AnyAnswearSelected);
-			SelectAnswearCommand = new Command<AnswearNO>(SelectAnswearAction);
+			SelectAnswerCommand = new MvxCommand<AnswerPO>(SelectAnswerAction);
+			ConfirmAnswerCommand = new MvxCommand(ConfirmAnswerAction, AnyAnswerSelected);
 
-			Question = "To be, or not to be?";
-			Answears = new[]
-			{
-				new AnswearNO {Answear = "first", SelectedCommand = SelectAnswearCommand},
-				new AnswearNO {Answear = "second", SelectedCommand = SelectAnswearCommand},
-				new AnswearNO {Answear = "third", SelectedCommand = SelectAnswearCommand},
-				new AnswearNO {Answear = "fourth", SelectedCommand = SelectAnswearCommand}
-			};
+			Answers = new List<AnswerPO>();
+		}
 
-			LoadQuestion();
+		public override async void Start()
+		{
+			await LoadQuestion();
 		}
 
 		private string _question;
@@ -43,48 +32,47 @@ namespace QuizApp.ViewModels
 			get { return _question; }
 			set
 			{
-				_question = value;
-				RaisePropertyChanged(() => Question);
+				SetProperty(ref _question, value);
 			}
+
 		}
 
-		private IEnumerable<AnswearNO> _answears;
-		public IEnumerable<AnswearNO> Answears
+		private IEnumerable<AnswerPO> _answers;
+		public IEnumerable<AnswerPO> Answers
 		{
-			get { return _answears; }
+			get { return _answers; }
 			set
 			{
-				_answears = value;
-				RaisePropertyChanged(() => Answears);
+				SetProperty(ref _answers, value);
 			}
 		}
 
-		public ICommand ConfirmAnswearCommand => _confirmAnswearCommand;
-		private async void ConfirmAnswearAction()
+		public IMvxCommand ConfirmAnswerCommand { get; }
+		private async void ConfirmAnswerAction()
 		{
 			await LoadQuestion();
-			_confirmAnswearCommand.ChangeCanExecute();
-			//await _navigationService.ShowViewModel<QuestionViewModel>();
+			ConfirmAnswerCommand.RaiseCanExecuteChanged();
 		}
 
-		private bool AnyAnswearSelected()
+		private bool AnyAnswerSelected()
 		{
-			return Answears.Any(answear => answear.Selected);
+			return Answers.Any(answear => answear.Selected);
 		}
 
-		public ICommand SelectAnswearCommand { get; private set; }
+		public IMvxCommand SelectAnswerCommand { get; }
 
-		private void SelectAnswearAction(AnswearNO selectedAnswear)
+		private void SelectAnswerAction(AnswerPO selectedAnswear)
 		{
 			if (selectedAnswear.Selected)
 				return;
 
-			foreach (var answear in Answears)
+			foreach (var answear in Answers)
 			{
 				answear.Selected = false;
 			}
+
 			selectedAnswear.Selected = true;
-			_confirmAnswearCommand.ChangeCanExecute();
+			ConfirmAnswerCommand.RaiseCanExecuteChanged();
 		}
 
 		private async Task LoadQuestion()
@@ -94,10 +82,10 @@ namespace QuizApp.ViewModels
 				return;
 
 			Question = question.Question;
-			Answears = question.Answers.Select(x => new AnswearNO
+			Answers = question.Answers.Select(x => new AnswerPO
 			{
-				Answear = x,
-				SelectedCommand = SelectAnswearCommand
+				Answer = x,
+				SelectedCommand = SelectAnswerCommand
 			}).ToList();
 		}
 	}

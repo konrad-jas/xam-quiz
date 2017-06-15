@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using QuizApp.Extensions;
-using QuizApp.POs;
+using QuizApp.Core.Extensions;
+using QuizApp.Core.POs;
 
-namespace QuizApp.Services.Impl
+namespace QuizApp.Core.Services.Impl
 {
 	public class QuestionsService : IQuestionsService
 	{

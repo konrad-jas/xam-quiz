@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using QuizApp.DTOs;
+using QuizApp.Core.DTOs;
 using Refit;
 
-namespace QuizApp.Services
+namespace QuizApp.Core.Services
 {
 	public interface ITriviaServiceClient
 	{
