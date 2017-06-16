@@ -38,7 +38,6 @@
     <Compile Include="DTOs\TokenRequestDTO.cs" />
     <Compile Include="DTOs\TokenResetDTO.cs" />
     <Compile Include="Enums\QuestionDifficulty.cs" />
-    <Compile Include="NavObjects\QuestionNavObject.cs" />
     <Compile Include="Pages\CategoriesPage.xaml.cs">
       <DependentUpon>CategoriesPage.xaml</DependentUpon>
     </Compile>
@@ -65,6 +64,12 @@
     <Compile Include="POs\QuestionPO.cs" />
     <Compile Include="App.cs" />
     <Compile Include="POs\AnswerPO.cs" />
+    <Compile Include="ViewModels\FinalScoreViewModel.cs" />
+    <Compile Include="Pages\FinalScorePage.xaml.cs">
+      <DependentUpon>FinalScorePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NavObjects\FinalScoreNavObject.cs" />
+    <Compile Include="NavObjects\QuestionNavObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -115,6 +120,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pages\FinalScorePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\QuestionPage.xaml">
@@ -123,6 +131,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="NavObjects\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

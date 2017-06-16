@@ -4,23 +4,27 @@ using QuizApp.Core.Services;
 using System.Threading.Tasks;
 using MvvmCross.Core.ViewModels;
 using QuizApp.Core.Enums;
-using QuizApp.Core.NavObjects;
 using QuizApp.Core.POs;
+using MvvmCross.Core.Navigation;
+using QuizApp.Core.NavObjects;
 
 namespace QuizApp.Core.ViewModels
 {
 	public class QuestionViewModel : MvxViewModel<QuestionNavObject>
 	{
 		private readonly IQuestionsService _questionsService;
+		private readonly IMvxNavigationService _navigationService;
+
 		private int _categoryId;
 		private string _categoryName;
 
-		public QuestionViewModel(IQuestionsService questionsService)
+		public QuestionViewModel(IQuestionsService questionsService, IMvxNavigationService navigationService)
 		{
 			_questionsService = questionsService;
+			_navigationService = navigationService;
 
 			SelectAnswerCommand = new MvxCommand<AnswerPO>(SelectAnswerAction);
-			ConfirmAnswerCommand = new MvxCommand(ConfirmAnswerAction, AnyAnswerSelected);
+			ConfirmAnswerCommand = new MvxAsyncCommand(ConfirmAnswerAction, AnyAnswerSelected);
 
 			Answers = new List<AnswerPO>();
 		}
@@ -29,39 +33,47 @@ namespace QuizApp.Core.ViewModels
 		{
 			_categoryId = parameter.CategoryId;
 			_categoryName = parameter.CategoryName;
-		}
 
-		public override async void Start()
-		{
 			await LoadQuestion();
 		}
 
 		private string _question;
 		public string Question
 		{
-			get { return _question; }
-			set
-			{
-				SetProperty(ref _question, value);
-			}
-
+			get => _question;
+			set => SetProperty(ref _question, value);
 		}
 
 		private IEnumerable<AnswerPO> _answers;
 		public IEnumerable<AnswerPO> Answers
 		{
-			get { return _answers; }
-			set
-			{
-				SetProperty(ref _answers, value);
-			}
+			get => _answers;
+			set => SetProperty(ref _answers, value);
+		}
+
+		private int _score;
+		public int Score
+		{
+			get => _score;
+			set => SetProperty(ref _score, value);
 		}
 
 		public IMvxCommand ConfirmAnswerCommand { get; }
-		private async void ConfirmAnswerAction()
+		private async Task ConfirmAnswerAction()
 		{
-			await LoadQuestion();
-			ConfirmAnswerCommand.RaiseCanExecuteChanged();
+			var selectedAnswer = Answers.Single(x => x.Selected);
+			if (selectedAnswer.Correct)
+			{
+				Score++;
+
+				await LoadQuestion();
+				ConfirmAnswerCommand.RaiseCanExecuteChanged();
+			}
+			else
+			{
+				var finalScoreNavObject = new FinalScoreNavObject { Score = Score };
+				await _navigationService.Navigate<FinalScoreViewModel, FinalScoreNavObject>(finalScoreNavObject);
+			}
 		}
 
 		private bool AnyAnswerSelected()
@@ -76,9 +88,9 @@ namespace QuizApp.Core.ViewModels
 			if (selectedAnswear.Selected)
 				return;
 
-			foreach (var answear in Answers)
+			foreach (var answer in Answers)
 			{
-				answear.Selected = false;
+				answer.Selected = false;
 			}
 
 			selectedAnswear.Selected = true;
@@ -92,11 +104,12 @@ namespace QuizApp.Core.ViewModels
 				return;
 
 			Question = question.Question;
-			Answers = question.Answers.Select(x => new AnswerPO
+			Answers = question.Answers;
+
+			foreach (var answer in question.Answers)
 			{
-				Answer = x,
-				SelectedCommand = SelectAnswerCommand
-			}).ToList();
+				answer.SelectedCommand = SelectAnswerCommand;
+			}
 		}
 	}
 }

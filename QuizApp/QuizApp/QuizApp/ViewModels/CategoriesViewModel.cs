@@ -3,9 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using MvvmCross.Core.Navigation;
 using MvvmCross.Core.ViewModels;
-using QuizApp.Core.NavObjects;
 using QuizApp.Core.POs;
 using QuizApp.Core.Services;
+using QuizApp.Core.NavObjects;
 
 namespace QuizApp.Core.ViewModels
 {
@@ -22,11 +22,6 @@ namespace QuizApp.Core.ViewModels
 			SelectCategoryCommand = new MvxCommand<CategoryPO>(SelectCategoryAction);
 			ConfirmCategoryCommand = new MvxAsyncCommand(ConfirmCategoryAction, AnyCategorySelected);
 
-			Categories = new List<CategoryPO>();
-		}
-
-		public override void Start()
-		{
 			Categories = _categoriesService.GetCategories();
 
 			foreach (var category in Categories)
