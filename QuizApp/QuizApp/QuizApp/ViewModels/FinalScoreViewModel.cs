@@ -1,10 +1,8 @@
-﻿using System.Threading.Tasks;
-using MvvmCross.Core.ViewModels;
-using QuizApp.Core.NavObjects;
+﻿using MvvmCross.Core.ViewModels;
 
 namespace QuizApp.Core.ViewModels
 {
-	public class FinalScoreViewModel : MvxViewModel<FinalScoreNavObject>
+	public class FinalScoreViewModel : MvxViewModel
 	{
 		private int _score;
 		public int Score
@@ -13,11 +11,9 @@ namespace QuizApp.Core.ViewModels
 			set => SetProperty(ref _score, value);
 		}
 
-		public override Task Initialize(FinalScoreNavObject parameter)
+		public void Init(int score)
 		{
-			Score = parameter.Score;
-
-			return Task.FromResult(true);
+			Score = score;
 		}
 	}
 }

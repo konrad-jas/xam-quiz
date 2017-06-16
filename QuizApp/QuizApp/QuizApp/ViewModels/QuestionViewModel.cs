@@ -5,23 +5,19 @@ using System.Threading.Tasks;
 using MvvmCross.Core.ViewModels;
 using QuizApp.Core.Enums;
 using QuizApp.Core.POs;
-using MvvmCross.Core.Navigation;
-using QuizApp.Core.NavObjects;
 
 namespace QuizApp.Core.ViewModels
 {
-	public class QuestionViewModel : MvxViewModel<QuestionNavObject>
+	public class QuestionViewModel : MvxViewModel
 	{
 		private readonly IQuestionsService _questionsService;
-		private readonly IMvxNavigationService _navigationService;
 
 		private int _categoryId;
 		private string _categoryName;
 
-		public QuestionViewModel(IQuestionsService questionsService, IMvxNavigationService navigationService)
+		public QuestionViewModel(IQuestionsService questionsService)
 		{
 			_questionsService = questionsService;
-			_navigationService = navigationService;
 
 			SelectAnswerCommand = new MvxCommand<AnswerPO>(SelectAnswerAction);
 			ConfirmAnswerCommand = new MvxAsyncCommand(ConfirmAnswerAction, AnyAnswerSelected);
@@ -29,11 +25,14 @@ namespace QuizApp.Core.ViewModels
 			Answers = new List<AnswerPO>();
 		}
 
-		public override async Task Initialize(QuestionNavObject parameter)
+		public void Init(int categoryId, string categoryName)
 		{
-			_categoryId = parameter.CategoryId;
-			_categoryName = parameter.CategoryName;
+			_categoryId = categoryId;
+			_categoryName = categoryName;
+		}
 
+		public override async void Start()
+		{
 			await LoadQuestion();
 		}
 
@@ -71,8 +70,7 @@ namespace QuizApp.Core.ViewModels
 			}
 			else
 			{
-				var finalScoreNavObject = new FinalScoreNavObject { Score = Score };
-				await _navigationService.Navigate<FinalScoreViewModel, FinalScoreNavObject>(finalScoreNavObject);
+				ShowViewModel<FinalScoreViewModel>(new { score = Score });
 			}
 		}
 
