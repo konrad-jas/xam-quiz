@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using QuizApp.Core.Enums;
 using QuizApp.Core.Extensions;
 using QuizApp.Core.POs;
+using System.Collections.Generic;
+using QuizApp.Core.DTOs;
 
 namespace QuizApp.Core.Services.Impl
 {
@@ -20,21 +22,18 @@ namespace QuizApp.Core.Services.Impl
 
 		public async Task<QuestionPO> GetQuestion(int categoryId, QuestionDifficulty questionDifficulty)
 		{
-			var difficulty = questionDifficulty.ToString().ToLower();
-			var token = await _tokenService.GetOrCreateToken();
-
-			var questions = await _triviaServiceProxy.GetTriviaQuestions(1, categoryId, difficulty, token);
-			var question = questions?.Results?.FirstOrDefault();
-			if (question?.IncorrectAnswers == null)
+			var triviaQuestions = await FetchQuestions(1, categoryId, questionDifficulty);
+			var triviaQuestion = triviaQuestions?.FirstOrDefault();
+			if (triviaQuestion?.IncorrectAnswers == null)
 				return null;
 
-			var answers = question.IncorrectAnswers;
-			answers.Add(question.CorrectAnswer);
+			var answers = triviaQuestion.IncorrectAnswers.Select(x => new AnswerPO { Answer = WebUtility.HtmlDecode(x) }).ToList();
+			answers.Add(new AnswerPO { Answer = WebUtility.HtmlDecode(triviaQuestion.CorrectAnswer), Correct = true });
 			answers.Shuffle();
 
 			return new QuestionPO
 			{
-				Question = WebUtility.HtmlDecode(question.Question),
+				Question = WebUtility.HtmlDecode(triviaQuestion.Question),
 				Answers = answers
 			};
 		}
@@ -42,6 +41,18 @@ namespace QuizApp.Core.Services.Impl
 		public async Task WipeMemory()
 		{
 			await _tokenService.ResetToken();
+		}
+
+		private async Task<IEnumerable<TriviaQuestionDTO>> FetchQuestions(int amount, int categoryId, QuestionDifficulty questionDifficulty)
+		{
+			var difficulty = questionDifficulty.ToString().ToLower();
+			var token = await _tokenService.GetOrCreateToken();
+
+			var triviaQuestions = await _triviaServiceProxy.GetTriviaQuestions(1, categoryId, difficulty, token);
+			if (triviaQuestions == null)
+				return null;
+
+			return triviaQuestions.Results;
 		}
 	}
 }

@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using MvvmCross.Core.Navigation;
 using MvvmCross.Core.ViewModels;
-using QuizApp.Core.NavObjects;
 using QuizApp.Core.POs;
 using QuizApp.Core.Services;
 
@@ -12,17 +9,13 @@ namespace QuizApp.Core.ViewModels
 	public class CategoriesViewModel : MvxViewModel
 	{
 		private readonly ICategoriesService _categoriesService;
-		private readonly IMvxNavigationService _navigationService;
 
-		public CategoriesViewModel(ICategoriesService categoriesService, IMvxNavigationService navigationService)
+		public CategoriesViewModel(ICategoriesService categoriesService)
 		{
 			_categoriesService = categoriesService;
-			_navigationService = navigationService;
 
 			SelectCategoryCommand = new MvxCommand<CategoryPO>(SelectCategoryAction);
-			ConfirmCategoryCommand = new MvxAsyncCommand(ConfirmCategoryAction, AnyCategorySelected);
-
-			Categories = new List<CategoryPO>();
+			ConfirmCategoryCommand = new MvxCommand(ConfirmCategoryAction, AnyCategorySelected);
 		}
 
 		public override void Start()
@@ -35,7 +28,12 @@ namespace QuizApp.Core.ViewModels
 			}
 		}
 
-		public IEnumerable<CategoryPO> Categories { get; set; }
+		private IEnumerable<CategoryPO> _categories;
+		public IEnumerable<CategoryPO> Categories
+		{
+			get => _categories;
+			set => SetProperty(ref _categories, value);
+		}
 
 		public IMvxCommand SelectCategoryCommand { get; }
 		private void SelectCategoryAction(CategoryPO selectedCategory)
@@ -52,17 +50,11 @@ namespace QuizApp.Core.ViewModels
 			ConfirmCategoryCommand.RaiseCanExecuteChanged();
 		}
 
-		public IMvxAsyncCommand ConfirmCategoryCommand { get; }
-		private async Task ConfirmCategoryAction()
+		public IMvxCommand ConfirmCategoryCommand { get; }
+		private void ConfirmCategoryAction()
 		{
 			var selectedCategory = Categories.Single(x => x.Selected);
-			var navObject = new QuestionNavObject
-			{
-				CategoryId = selectedCategory.Id,
-				CategoryName = selectedCategory.Name
-			};
-
-			await _navigationService.Navigate<QuestionViewModel, QuestionNavObject>(navObject);
+			ShowViewModel<QuestionViewModel>(new { categoryId = selectedCategory.Id, categoryName = selectedCategory.Name });
 		}
 
 		private bool AnyCategorySelected()
