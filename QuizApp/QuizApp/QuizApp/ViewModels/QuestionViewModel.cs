@@ -180,10 +180,20 @@ namespace QuizApp.Core.ViewModels
 			_cancellationTokenSource?.Cancel();
 		}
 
-		private void OnTimeRanOut(object sender, EventArgs e)
+		private async void OnTimeRanOut(object sender, EventArgs e)
 		{
-			Cleanup();
-			ShowViewModel<FinalScoreViewModel>(new { score = Score });
+			if (Lives > 1)
+			{
+				Lives--;
+
+				await LoadQuestion();
+				ConfirmAnswerCommand.RaiseCanExecuteChanged();
+			}
+			else
+			{
+				Cleanup();
+				ShowViewModel<FinalScoreViewModel>(new { score = Score });
+			}
 		}
 	}
 }
