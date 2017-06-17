@@ -1,10 +1,9 @@
 ﻿using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using QuizApp.Core.Enums;
-using QuizApp.Core.Extensions;
 using QuizApp.Core.POs;
 using System.Collections.Generic;
+using AutoMapper;
 using QuizApp.Core.DTOs;
 
 namespace QuizApp.Core.Services.Impl
@@ -26,7 +25,7 @@ namespace QuizApp.Core.Services.Impl
 			_questions = new Dictionary<QuestionDifficulty, IList<QuestionPO>>();
 		}
 
-		public async Task<QuestionPO> GetQuestion(int categoryId, QuestionDifficulty difficulty)
+		public async Task<QuestionPO> GetQuestionAsync(int categoryId, QuestionDifficulty difficulty)
 		{
 			var sameCategory = _categoryIds.ContainsKey(difficulty) && _categoryIds[difficulty] == categoryId;
 			var anyQuestions = _questions.ContainsKey(difficulty) && _questions[difficulty].Any();
@@ -41,24 +40,24 @@ namespace QuizApp.Core.Services.Impl
 			return question;
 		}
 
-		public async Task WipeMemory()
+		public async Task WipeMemoryAsync()
 		{
-			await _tokenService.ResetToken();
+			await _tokenService.ResetTokenAsync();
 		}
 
 		private async Task PrefetchQuestions(int categoryId, QuestionDifficulty difficulty)
 		{
 			var questions = await FetchQuestions(10, categoryId, difficulty);
-			_questions[difficulty] = questions.Select(x => x.ToQuestionPO()).ToList();
+			_questions[difficulty] = questions.Select(Mapper.Map<QuestionPO>).ToList();
 			_categoryIds[difficulty] = categoryId;
 		}
 
 		private async Task<IEnumerable<TriviaQuestionDTO>> FetchQuestions(int amount, int categoryId, QuestionDifficulty questionDifficulty)
 		{
 			var difficulty = questionDifficulty.ToString().ToLower();
-			var token = await _tokenService.GetOrCreateToken();
+			var token = await _tokenService.GetOrCreateTokenAsync();
 
-			var triviaQuestions = await _triviaServiceProxy.GetTriviaQuestions(amount, categoryId, difficulty, token);
+			var triviaQuestions = await _triviaServiceProxy.GetTriviaQuestionsAsync(amount, categoryId, difficulty, token);
 			return triviaQuestions?.Results;
 		}
 	}

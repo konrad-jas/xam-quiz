@@ -13,6 +13,11 @@ namespace QuizApp.Core
 {
 	public class App : MvxApplication
 	{
+		public App()
+		{
+			AutoMapperBootstrapper.InitializeMappings();
+		}
+
 		public override void Initialize()
 		{
 			CreatableTypes()

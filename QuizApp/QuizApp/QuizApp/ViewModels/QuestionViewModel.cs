@@ -106,7 +106,7 @@ namespace QuizApp.Core.ViewModels
 
 		private async Task LoadQuestion()
 		{
-			var question = await _questionsService.GetQuestion(_categoryId, QuestionDifficulty.Medium);
+			var question = await _questionsService.GetQuestionAsync(_categoryId, QuestionDifficulty.Medium);
 			if (question == null)
 				return;
 

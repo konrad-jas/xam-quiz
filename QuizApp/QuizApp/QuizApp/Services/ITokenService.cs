@@ -4,7 +4,7 @@ namespace QuizApp.Core.Services
 {
 	public interface ITokenService
 	{
-		Task<string> GetOrCreateToken();
-		Task ResetToken();
+		Task<string> GetOrCreateTokenAsync();
+		Task ResetTokenAsync();
 	}
 }
