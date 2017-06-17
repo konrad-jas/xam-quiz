@@ -4,6 +4,10 @@
              xmlns:core="clr-namespace:MvvmCross.Forms.Core;assembly=MvvmCross.Forms"
              x:Class="QuizApp.Core.Pages.FinalScorePage">
 	<StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+		<StackLayout IsVisible="{Binding MadeItToHighscores}">
+			<Label Text="Congratulations!"/>
+			<Label Text="{Binding Place, StringFormat='You made it to {0} place in the highscores!'}"/>
+		</StackLayout>
 		<Label Text="{Binding Score, StringFormat='Your final score is {0}'}" FontSize="20" FontAttributes="Bold"/>
 		<Button Text="Try again" Command="{Binding RestartCommand}"/>
 	</StackLayout>

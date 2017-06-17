@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform.WeakSubscription;
 using QuizApp.Core.Services;
 
 namespace QuizApp.Core.ViewModels
@@ -34,6 +35,20 @@ namespace QuizApp.Core.ViewModels
 			set => SetProperty(ref _score, value);
 		}
 
+		private bool _madeItToHighscores;
+		public bool MadeItToHighscores
+		{
+			get => _madeItToHighscores;
+			set => SetProperty(ref _madeItToHighscores, value);
+		}
+
+		private int _place;
+		public int Place
+		{
+			get => _place;
+			set => SetProperty(ref _place, value);
+		}
+
 		public void Init(int score)
 		{
 			Score = score;
@@ -41,7 +56,15 @@ namespace QuizApp.Core.ViewModels
 
 		public override async void Start()
 		{
-			await _highscoresService.AddHighscoreAsync(Score, _userService.GetCurrentUser());
+			(bool inHighscores, int place) = await _highscoresService.QualifiesForHighscores(Score);
+
+			MadeItToHighscores = inHighscores;
+			Place = place;
+
+			if (inHighscores)
+			{
+				await _highscoresService.AddHighscoreAsync(Score, _userService.GetCurrentUser());
+			}
 		}
 	}
 }

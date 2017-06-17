@@ -23,7 +23,7 @@ namespace QuizApp.Core.Services.Impl
 			return mappedScores;
 		}
 
-		public async Task<(bool, int)> MakesIntoHighscoreAsync(int result)
+		public async Task<(bool InHighscores, int Place)> QualifiesForHighscores(int result)
 		{
 			var scores = await GetTopScores();
 			var place = scores.Count(x => result < x.Result) + 1;

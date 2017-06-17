@@ -7,7 +7,7 @@ namespace QuizApp.Core.Services
 	public interface IHighscoresService
 	{
 		Task<IEnumerable<ScorePO>> GetHighscoresAsync();
-		Task<(bool, int)> MakesIntoHighscoreAsync(int result);
+		Task<(bool InHighscores, int Place)> QualifiesForHighscores(int result);
 		Task AddHighscoreAsync(int result, string user);
 	}
 }
