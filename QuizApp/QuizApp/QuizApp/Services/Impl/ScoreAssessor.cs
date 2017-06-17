@@ -37,11 +37,17 @@ namespace QuizApp.Core.Services.Impl
 		}
 
 		public event EventHandler OnTimeRanOut;
-		public int RemainingSeconds => _config.MaxTime - (DateTime.Now - _startTime).Seconds;
+
+		private int GetRemainingSeconds()
+		{
+			return _config.MaxTime - (DateTime.Now - _startTime).Seconds;
+		}
+
+		public double Progress => Math.Round((double)GetRemainingSeconds() / _config.MaxTime, 1);
 
 		public void StopTimer()
 		{
-			_finalTime = RemainingSeconds;
+			_finalTime = GetRemainingSeconds();
 			_finished = true;
 			_cancellationTokenSource.Cancel();
 		}
