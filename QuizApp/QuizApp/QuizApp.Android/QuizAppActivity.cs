@@ -11,7 +11,7 @@ using MvvmCross.Core.ViewModels;
 
 namespace QuizApp.Droid
 {
-	[Activity(Label = "QuizAppActivity", Icon = "@drawable/icon", Theme = "@style/MainTheme", ScreenOrientation = ScreenOrientation.Portrait)]
+	[Activity(Label = "QuizApp", Icon = "@drawable/icon", Theme = "@style/MainTheme", ScreenOrientation = ScreenOrientation.Portrait)]
 	public class QuizAppActivity : MvxFormsAppCompatActivity
 	{
 		protected override void OnCreate(Bundle bundle)

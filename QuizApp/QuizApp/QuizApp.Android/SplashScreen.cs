@@ -6,7 +6,7 @@ using Xamarin.Forms;
 namespace QuizApp.Droid
 {
 	[Activity(
-		Label = "QuizApp.Droid"
+		Label = "QuizApp"
 		, MainLauncher = true
 		, Icon = "@drawable/icon"
 		, Theme = "@style/Theme.Splash"
