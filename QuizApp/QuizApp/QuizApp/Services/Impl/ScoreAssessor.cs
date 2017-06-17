@@ -43,7 +43,7 @@ namespace QuizApp.Core.Services.Impl
 			return _config.MaxTime - (DateTime.Now - _startTime).Seconds;
 		}
 
-		public double Progress => Math.Round((double)GetRemainingSeconds() / _config.MaxTime, 1);
+		public double RemainingTime => Math.Round((double)GetRemainingSeconds() / _config.MaxTime, 1);
 
 		public void StopTimer()
 		{
