@@ -2,6 +2,9 @@ using Android.Content;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform.Platform;
 using MvvmCross.Forms.Droid;
+using MvvmCross.Platform;
+using QuizApp.Core.Services;
+using QuizApp.Droid.Services;
 
 namespace QuizApp.Droid
 {
@@ -14,6 +17,7 @@ namespace QuizApp.Droid
 
 		protected override IMvxApplication CreateApp()
 		{
+			Mvx.LazyConstructAndRegisterSingleton<ICameraService, CameraService>();
 			return new Core.App();
 		}
 
