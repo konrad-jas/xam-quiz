@@ -38,7 +38,17 @@ namespace QuizApp.Core.ViewModels
 
 		public override async void Start()
 		{
+			IsBusy = true;
+			await _questionsService.PrefetchQuestions(_categoryId);
 			await LoadQuestion();
+			IsBusy = false;
+		}
+
+		private bool _isBusy;
+		public bool IsBusy
+		{
+			get => _isBusy;
+			set => SetProperty(ref _isBusy, value);
 		}
 
 		private string _question;
@@ -96,7 +106,7 @@ namespace QuizApp.Core.ViewModels
 			}
 			else
 			{
-				ShowViewModel<FinalScoreViewModel>(new {score = Score});
+				ShowViewModel<FinalScoreViewModel>(new { score = Score });
 			}
 		}
 

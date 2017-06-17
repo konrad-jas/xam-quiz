@@ -1,10 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <core:MvxContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:core="clr-namespace:MvvmCross.Forms.Core;assembly=MvvmCross.Forms"
              x:Class="QuizApp.Core.Pages.StartingPage">
-	<StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-		<Button Text="Let's go" Command="{Binding StartCommand}"/>
-		<Button Text="Highscores" Command="{Binding HighscoresCommand}"/>
+	<StackLayout VerticalOptions="Center">
+		<Button Text="Let's go" Command="{Binding StartCommand}" Margin="60, 5"/>
+		<Button Text="Highscores" Command="{Binding HighscoresCommand}" Margin="60, 5"/>
 	</StackLayout>
 </core:MvxContentPage>

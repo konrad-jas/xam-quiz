@@ -27,5 +27,22 @@
 			</ListView.ItemTemplate>
 		</ListView>
 		<Button Grid.Row="2" Text="Select answer" Command="{Binding ConfirmAnswerCommand}"/>
+		<Grid Grid.RowSpan="3"
+			IsVisible="{Binding IsBusy}"
+			BackgroundColor="White">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<Label
+				Text="Preparing questions" 
+				FontSize="22"
+				HorizontalOptions="Center"
+				Margin="0, 40, 0, 0"/>
+			<ActivityIndicator Grid.Row="1"
+							IsRunning="{Binding IsBusy}" 
+							HorizontalOptions="Center"
+							VerticalOptions="Center"/>
+		</Grid>
 	</Grid>
 </core:MvxContentPage>

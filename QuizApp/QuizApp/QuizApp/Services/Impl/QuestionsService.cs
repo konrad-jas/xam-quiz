@@ -48,9 +48,18 @@ namespace QuizApp.Core.Services.Impl
 			await _tokenService.ResetTokenAsync();
 		}
 
+		public async Task PrefetchQuestions(int categoryId)
+		{
+			var easyQuestionsTask = PrefetchQuestions(categoryId, QuestionDifficulty.Easy);
+			var mediumQuestionsTask = PrefetchQuestions(categoryId, QuestionDifficulty.Medium);
+			var hardQuestionsTask = PrefetchQuestions(categoryId, QuestionDifficulty.Hard);
+
+			await Task.WhenAll(easyQuestionsTask, mediumQuestionsTask, hardQuestionsTask);
+		}
+
 		private async Task PrefetchQuestions(int categoryId, QuestionDifficulty difficulty)
 		{
-			var questions = await FetchQuestions(10, categoryId, difficulty);
+			var questions = await FetchQuestions(20, categoryId, difficulty);
 			_questions[difficulty] = questions.Select(Mapper.Map<QuestionPO>).ToList();
 			_categoryIds[difficulty] = categoryId;
 		}
