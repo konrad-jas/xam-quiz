@@ -49,6 +49,7 @@
     <Compile Include="Services\Impl\TriviaServiceProxy.cs" />
     <Compile Include="Services\IScoreAssessor.cs" />
     <Compile Include="Services\IScoreAssessorConfig.cs" />
+    <Compile Include="Services\IScoreAssessorFactory.cs" />
     <Compile Include="Services\ITokenService.cs" />
     <Compile Include="Services\ITriviaServiceProxy.cs" />
     <Compile Include="Services\Impl\ScoreAssessor.cs" />
