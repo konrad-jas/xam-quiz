@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using QuizApp.Core.Services;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace QuizApp.Core.ViewModels
 			ConfirmAnswerCommand = new MvxAsyncCommand(ConfirmAnswerAction, AnyAnswerSelected);
 
 			Answers = new List<AnswerPO>();
+			Lives = 3;
 		}
 
 		public void Init(int categoryId, string categoryName)
@@ -54,21 +56,29 @@ namespace QuizApp.Core.ViewModels
 		}
 
 		private int _score;
-		private IScoreAssessor _scoreAssessor;
-		private CancellationTokenSource _cancellationTokenSource;
-		private double _remainingTime;
-
 		public int Score
 		{
 			get => _score;
 			set => SetProperty(ref _score, value);
 		}
 
+		private int _lives;
+		public int Lives
+		{
+			get => _lives;
+			set => SetProperty(ref _lives, value);
+		}
+
+		private IScoreAssessor _scoreAssessor;
+		private CancellationTokenSource _cancellationTokenSource;
+		private double _remainingTime;
+
 		public IMvxCommand ConfirmAnswerCommand { get; }
 		private async Task ConfirmAnswerAction()
 		{
 			_scoreAssessor.StopTimer();
 			Cleanup();
+
 			var selectedAnswer = Answers.Single(x => x.Selected);
 			if (selectedAnswer.Correct)
 			{
@@ -77,9 +87,16 @@ namespace QuizApp.Core.ViewModels
 				await LoadQuestion();
 				ConfirmAnswerCommand.RaiseCanExecuteChanged();
 			}
+			else if (Lives > 1)
+			{
+				Lives--;
+
+				await LoadQuestion();
+				ConfirmAnswerCommand.RaiseCanExecuteChanged();
+			}
 			else
 			{
-				ShowViewModel<FinalScoreViewModel>(new { score = Score });
+				ShowViewModel<FinalScoreViewModel>(new {score = Score});
 			}
 		}
 
@@ -106,7 +123,7 @@ namespace QuizApp.Core.ViewModels
 
 		private async Task LoadQuestion()
 		{
-			var question = await _questionsService.GetQuestion(_categoryId, QuestionDifficulty.Medium);
+			var question = await _questionsService.GetQuestionAsync(_categoryId, QuestionDifficulty.Medium);
 			if (question == null)
 				return;
 
@@ -117,6 +134,7 @@ namespace QuizApp.Core.ViewModels
 			{
 				answer.SelectedCommand = SelectAnswerCommand;
 			}
+
 			Cleanup();
 			_scoreAssessor = _scoreAssessorFactory.GetAssessor();
 			_scoreAssessor.OnTimeRanOut += OnTimeRanOut;

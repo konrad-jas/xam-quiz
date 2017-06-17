@@ -13,6 +13,11 @@ namespace QuizApp.Core
 {
 	public class App : MvxApplication
 	{
+		public App()
+		{
+			AutoMapperBootstrapper.InitializeMappings();
+		}
+
 		public override void Initialize()
 		{
 			CreatableTypes()
@@ -29,7 +34,7 @@ namespace QuizApp.Core
 			Mvx.LazyConstructAndRegisterSingleton<IScoreAssessorFactory, ScoreAssessorFactory>();
 			Mvx.LazyConstructAndRegisterSingleton<IScoreAssessorConfig>(() => new ScoreAssessorConfig(30, 1, 3));
 
-			RegisterAppStart<CategoriesViewModel>();
+			RegisterAppStart<StartingViewModel>();
 		}
 	}
 }

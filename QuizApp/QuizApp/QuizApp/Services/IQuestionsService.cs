@@ -6,7 +6,7 @@ namespace QuizApp.Core.Services
 {
 	public interface IQuestionsService
 	{
-		Task<QuestionPO> GetQuestion(int categoryId, QuestionDifficulty difficulty);
-		Task WipeMemory();
+		Task<QuestionPO> GetQuestionAsync(int categoryId, QuestionDifficulty difficulty);
+		Task WipeMemoryAsync();
 	}
 }

@@ -14,21 +14,21 @@ namespace QuizApp.Core.Services.Impl
 			_triviaServiceClient = triviaServiceClient;
 		}
 
-		public async Task<TriviaRootDTO> GetTriviaQuestions(int amount, int category, string difficulty, string token)
+		public async Task<TriviaRootDTO> GetTriviaQuestionsAsync(int amount, int category, string difficulty, string token)
 		{
-			return await FetchAsync(async () => await _triviaServiceClient.GetTriviaQuestions(amount, category, difficulty, token),
+			return await FetchAsync(async () => await _triviaServiceClient.GetTriviaQuestionsAsync(amount, category, difficulty, token),
 				() => null).ConfigureAwait(false);
 		}
 
-		public async Task<TokenRequestDTO> GetToken()
+		public async Task<TokenRequestDTO> GetTokenAsync()
 		{
-			return await FetchAsync(async () => await _triviaServiceClient.GetToken(),
+			return await FetchAsync(async () => await _triviaServiceClient.GetTokenAsync(),
 				() => null).ConfigureAwait(false);
 		}
 
-		public async Task<TokenResetDTO> ResetToken(string token)
+		public async Task<TokenResetDTO> ResetTokenAsync(string token)
 		{
-			return await FetchAsync(async () => await _triviaServiceClient.ResetToken(token),
+			return await FetchAsync(async () => await _triviaServiceClient.ResetTokenAsync(token),
 				() => null).ConfigureAwait(false);
 		}
 

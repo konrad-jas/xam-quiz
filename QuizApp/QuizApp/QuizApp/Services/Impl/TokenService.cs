@@ -12,11 +12,11 @@ namespace QuizApp.Core.Services.Impl
 			_triviaServiceProxy = triviaServiceProxy;
 		}
 
-		public async Task<string> GetOrCreateToken()
+		public async Task<string> GetOrCreateTokenAsync()
 		{
 			if (_token == null)
 			{
-				var res = await _triviaServiceProxy.GetToken();
+				var res = await _triviaServiceProxy.GetTokenAsync();
 				if (res == null)
 					return null;
 
@@ -26,12 +26,12 @@ namespace QuizApp.Core.Services.Impl
 			return _token;
 		}
 
-		public async Task ResetToken()
+		public async Task ResetTokenAsync()
 		{
 			if (_token == null)
 				return;
 
-			await _triviaServiceProxy.ResetToken(_token);
+			await _triviaServiceProxy.ResetTokenAsync(_token);
 		}
 	}
 }
