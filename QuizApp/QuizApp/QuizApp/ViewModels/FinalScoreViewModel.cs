@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using MvvmCross.Core.ViewModels;
-using MvvmCross.Platform.WeakSubscription;
 using QuizApp.Core.Services;
 
 namespace QuizApp.Core.ViewModels
@@ -21,7 +20,6 @@ namespace QuizApp.Core.ViewModels
 		}
 
 		public IMvxCommand RestartCommand { get; }
-
 		private async Task RestartAction()
 		{
 			await _questionsService.WipeMemoryAsync();
