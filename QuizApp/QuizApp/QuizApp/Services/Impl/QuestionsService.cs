@@ -35,8 +35,11 @@ namespace QuizApp.Core.Services.Impl
 				await PrefetchQuestions(categoryId, difficulty);
 			}
 
-			var question = _questions[difficulty].First();
-			_questions[difficulty].RemoveAt(0);
+			var question = _questions[difficulty].FirstOrDefault();
+			if (question == null)
+				return null;
+
+			_questions[difficulty].Remove(question);
 			return question;
 		}
 

@@ -46,6 +46,9 @@
     <Compile Include="Pages\HighscoresPage.xaml.cs">
       <DependentUpon>HighscoresPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\NamePage.xaml.cs">
+      <DependentUpon>NamePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\StartingPage.xaml.cs">
       <DependentUpon>StartingPage.xaml</DependentUpon>
     </Compile>
@@ -66,9 +69,11 @@
     <Compile Include="Services\Impl\ScoreAssessor.cs" />
     <Compile Include="Services\Impl\ScoreAssessorConfig.cs" />
     <Compile Include="Services\Impl\ScoreAssessorFactory.cs" />
+    <Compile Include="Utils\AppData.cs" />
     <Compile Include="Utils\QuestionResolver.cs" />
     <Compile Include="ViewModels\CategoriesViewModel.cs" />
     <Compile Include="ViewModels\HighscoresViewModel.cs" />
+    <Compile Include="ViewModels\NameViewModel.cs" />
     <Compile Include="ViewModels\QuestionViewModel.cs" />
     <Compile Include="Pages\QuestionPage.xaml.cs">
       <DependentUpon>QuestionPage.xaml</DependentUpon>
@@ -184,6 +189,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\HighscoresPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\NamePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

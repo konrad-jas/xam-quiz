@@ -1,22 +1,28 @@
-﻿using MvvmCross.Core.ViewModels;
+﻿using System.Threading.Tasks;
+using MvvmCross.Core.ViewModels;
 using QuizApp.Core.Services;
+using QuizApp.Core.Utils;
 
 namespace QuizApp.Core.ViewModels
 {
 	public class FinalScoreViewModel : MvxViewModel
 	{
 		private readonly IHighscoresService _highscoresService;
+		private readonly IQuestionsService _questionsService;
 
-		public FinalScoreViewModel(IHighscoresService highscoresService)
+		public FinalScoreViewModel(IHighscoresService highscoresService, IQuestionsService questionsService)
 		{
 			_highscoresService = highscoresService;
-			RestartCommand = new MvxCommand(RestartAction);
+			_questionsService = questionsService;
+
+			RestartCommand = new MvxAsyncCommand(RestartAction);
 		}
 
 		public IMvxCommand RestartCommand { get; }
 
-		private void RestartAction()
+		private async Task RestartAction()
 		{
+			await _questionsService.WipeMemoryAsync();
 			ShowViewModel<CategoriesViewModel>();
 		}
 
@@ -34,7 +40,7 @@ namespace QuizApp.Core.ViewModels
 
 		public override async void Start()
 		{
-			_highscoresService.AddHighscoreAsync(Score, "test");
+			await _highscoresService.AddHighscoreAsync(Score, AppData.User);
 		}
 	}
 }

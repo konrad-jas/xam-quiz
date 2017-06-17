@@ -52,17 +52,16 @@ namespace QuizApp.Core.ViewModels
 			get => _answers;
 			set => SetProperty(ref _answers, value);
 		}
-
 		private int _score;
-		private IScoreAssessor _scoreAssessor;
-		private CancellationTokenSource _cancellationTokenSource;
-		private double _remainingTime;
-
 		public int Score
 		{
 			get => _score;
 			set => SetProperty(ref _score, value);
 		}
+
+		private IScoreAssessor _scoreAssessor;
+		private CancellationTokenSource _cancellationTokenSource;
+		private double _remainingTime;
 
 		public IMvxCommand ConfirmAnswerCommand { get; }
 		private async Task ConfirmAnswerAction()

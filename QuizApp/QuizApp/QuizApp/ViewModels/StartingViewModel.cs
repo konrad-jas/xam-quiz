@@ -6,7 +6,7 @@ namespace QuizApp.Core.ViewModels
 	{
 		public StartingViewModel()
 		{
-			StartCommand = new MvxCommand(() => ShowViewModel<CategoriesViewModel>());
+			StartCommand = new MvxCommand(() => ShowViewModel<NameViewModel>());
 			HighscoresCommand = new MvxCommand(() => ShowViewModel<HighscoresViewModel>());
 		}
 
