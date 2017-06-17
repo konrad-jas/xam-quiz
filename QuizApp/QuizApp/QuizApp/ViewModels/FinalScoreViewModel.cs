@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MvvmCross.Core.ViewModels;
 using QuizApp.Core.Services;
-using QuizApp.Core.Utils;
 
 namespace QuizApp.Core.ViewModels
 {
@@ -9,11 +8,13 @@ namespace QuizApp.Core.ViewModels
 	{
 		private readonly IHighscoresService _highscoresService;
 		private readonly IQuestionsService _questionsService;
+		private readonly IUserService _userService;
 
-		public FinalScoreViewModel(IHighscoresService highscoresService, IQuestionsService questionsService)
+		public FinalScoreViewModel(IHighscoresService highscoresService, IQuestionsService questionsService, IUserService userService)
 		{
 			_highscoresService = highscoresService;
 			_questionsService = questionsService;
+			_userService = userService;
 
 			RestartCommand = new MvxAsyncCommand(RestartAction);
 		}
@@ -40,7 +41,7 @@ namespace QuizApp.Core.ViewModels
 
 		public override async void Start()
 		{
-			await _highscoresService.AddHighscoreAsync(Score, AppData.User);
+			await _highscoresService.AddHighscoreAsync(Score, _userService.GetCurrentUser());
 		}
 	}
 }

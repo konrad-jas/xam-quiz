@@ -1,16 +1,19 @@
 ﻿using MvvmCross.Core.ViewModels;
+using QuizApp.Core.Services;
 using QuizApp.Core.Utils;
 
 namespace QuizApp.Core.ViewModels
 {
 	public class NameViewModel : MvxViewModel
 	{
-		public NameViewModel()
-		{
-			NextCommand = new MvxCommand(() => ShowViewModel<CategoriesViewModel>(), () => !string.IsNullOrEmpty(User));
-		}
+		private readonly IUserService _userService;
 
-		public IMvxCommand NextCommand { get; }
+		public NameViewModel(IUserService userService)
+		{
+			_userService = userService;
+
+			NextCommand = new MvxCommand(NextAction, IsUserValid);
+		}
 
 		private string _user;
 		public string User
@@ -19,9 +22,18 @@ namespace QuizApp.Core.ViewModels
 			set
 			{
 				SetProperty(ref _user, value);
-				AppData.User = value;
 				NextCommand.RaiseCanExecuteChanged();
 			}
 		}
+
+		public IMvxCommand NextCommand { get; }
+		private void NextAction()
+		{
+			_userService.SaveCurrentUser(User);
+			ShowViewModel<CategoriesViewModel>();
+		}
+
+		private bool IsUserValid()
+			=> !string.IsNullOrEmpty(User);
 	}
 }

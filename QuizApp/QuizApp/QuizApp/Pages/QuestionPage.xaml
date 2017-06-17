@@ -11,6 +11,7 @@
 		</Grid.RowDefinitions>
 		<StackLayout Spacing="10" Margin="10, 0">
 			<ProgressBar Progress="{Binding RemainingTime}"/>
+			<Label Text="{Binding Lives, StringFormat='Lives: {0}'}"/>
 			<Label Text="{Binding Score, StringFormat='CurrentScore: {0}'}"/>
 			<Label Text="{Binding Question}"/>
 		</StackLayout>
