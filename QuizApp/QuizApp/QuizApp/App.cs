@@ -26,7 +26,8 @@ namespace QuizApp.Core
 			};
 			Mvx.LazyConstructAndRegisterSingleton(() => RestService.For<ITriviaServiceClient>(client));
 			Mvx.LazyConstructAndRegisterSingleton<ITriviaServiceProxy, TriviaServiceProxy>();
-
+			Mvx.LazyConstructAndRegisterSingleton<IScoreAssessorConfig>(() => new ScoreAssessorConfig(30, 1, 3));
+			Mvx.RegisterType<IScoreAssessor, ScoreAssessor>();
 			RegisterAppStart<CategoriesViewModel>();
 		}
 	}

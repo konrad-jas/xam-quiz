@@ -47,8 +47,12 @@
     <Compile Include="Services\Impl\CategoriesService.cs" />
     <Compile Include="Services\Impl\TokenService.cs" />
     <Compile Include="Services\Impl\TriviaServiceProxy.cs" />
+    <Compile Include="Services\IScoreAssessor.cs" />
+    <Compile Include="Services\IScoreAssessorConfig.cs" />
     <Compile Include="Services\ITokenService.cs" />
     <Compile Include="Services\ITriviaServiceProxy.cs" />
+    <Compile Include="Services\Impl\ScoreAssessor.cs" />
+    <Compile Include="Services\Impl\ScoreAssessorConfig.cs" />
     <Compile Include="ViewModels\CategoriesViewModel.cs" />
     <Compile Include="ViewModels\QuestionViewModel.cs" />
     <Compile Include="Pages\QuestionPage.xaml.cs">
