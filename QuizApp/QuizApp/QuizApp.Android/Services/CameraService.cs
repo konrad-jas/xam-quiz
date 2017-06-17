@@ -5,7 +5,7 @@ using QuizApp.Droid.NativeImpl;
 
 namespace QuizApp.Droid.Services
 {
-	public class CameraService : Java.Lang.Object, ICameraService
+	public class CameraService : ICameraService
 	{
 		public async Task<byte[]> TakePhoto()
 		{
