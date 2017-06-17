@@ -31,11 +31,6 @@ namespace QuizApp.Core.Services.Impl
 				},
 				new CategoryPO
 				{
-					Id = 13,
-					Name = "Entertainment: Musical & Theatres"
-				},
-				new CategoryPO
-				{
 					Id = 14,
 					Name = "Entertainment: Television"
 				},
@@ -43,11 +38,6 @@ namespace QuizApp.Core.Services.Impl
 				{
 					Id = 15,
 					Name = "Entertainment: Video Games"
-				},
-				new CategoryPO
-				{
-					Id = 16,
-					Name = "Entertainment: Board Games"
 				},
 				new CategoryPO
 				{
@@ -83,16 +73,6 @@ namespace QuizApp.Core.Services.Impl
 				{
 					Id = 23,
 					Name = "History"
-				},
-				new CategoryPO
-				{
-					Id = 24,
-					Name = "Politics"
-				},
-				new CategoryPO
-				{
-					Id = 25,
-					Name = "Art"
 				},
 				new CategoryPO
 				{
