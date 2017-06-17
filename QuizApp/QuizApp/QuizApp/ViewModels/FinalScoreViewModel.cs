@@ -1,11 +1,15 @@
 ﻿using MvvmCross.Core.ViewModels;
+using QuizApp.Core.Services;
 
 namespace QuizApp.Core.ViewModels
 {
 	public class FinalScoreViewModel : MvxViewModel
 	{
-		public FinalScoreViewModel()
+		private readonly IHighscoresService _highscoresService;
+
+		public FinalScoreViewModel(IHighscoresService highscoresService)
 		{
+			_highscoresService = highscoresService;
 			RestartCommand = new MvxCommand(RestartAction);
 		}
 
@@ -26,6 +30,11 @@ namespace QuizApp.Core.ViewModels
 		public void Init(int score)
 		{
 			Score = score;
+		}
+
+		public override async void Start()
+		{
+			_highscoresService.AddHighscoreAsync(Score, "test");
 		}
 	}
 }

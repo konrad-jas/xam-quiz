@@ -15,7 +15,12 @@ namespace QuizApp.Core.Services.Impl
 		public async Task<IEnumerable<ScorePO>> GetHighscoresAsync()
 		{
 			var scores = await GetTopScores();
-			return Mapper.Map<IEnumerable<ScorePO>>(scores);
+			var mappedScores = Mapper.Map<IList<ScorePO>>(scores);
+			for (var i = 0; i < mappedScores.Count; ++i)
+			{
+				mappedScores[i].Place = i + 1;
+			}
+			return mappedScores;
 		}
 
 		public async Task<(bool, int)> MakesIntoHighscoreAsync(int result)
@@ -25,7 +30,7 @@ namespace QuizApp.Core.Services.Impl
 			return (place <= Places, place);
 		}
 
-		public async Task AddHighscoreAsync(int result, string user, string category)
+		public async Task AddHighscoreAsync(int result, string user)
 		{
 			var realm = await Realm.GetInstanceAsync(RealmConfiguration.DefaultConfiguration);
 			await realm.WriteAsync(tempRealm =>
@@ -33,8 +38,7 @@ namespace QuizApp.Core.Services.Impl
 				tempRealm.Add(new Score
 				{
 					Result = result,
-					User = user,
-					Category = category
+					User = user
 				});
 			});
 		}
@@ -42,7 +46,7 @@ namespace QuizApp.Core.Services.Impl
 		private async Task<IEnumerable<Score>> GetTopScores()
 		{
 			var realm = await Realm.GetInstanceAsync(RealmConfiguration.DefaultConfiguration);
-			return await Task.Run(() => realm.All<Score>().OrderByDescending(x => x.Result).Take(Places).ToList());
+			return realm.All<Score>().OrderByDescending(x => x.Result).ToList().Take(Places);
 		}
 	}
 }

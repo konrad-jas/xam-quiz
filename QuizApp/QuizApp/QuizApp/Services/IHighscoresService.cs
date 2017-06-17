@@ -8,6 +8,6 @@ namespace QuizApp.Core.Services
 	{
 		Task<IEnumerable<ScorePO>> GetHighscoresAsync();
 		Task<(bool, int)> MakesIntoHighscoreAsync(int result);
-		Task AddHighscoreAsync(int result, string user, string category);
+		Task AddHighscoreAsync(int result, string user);
 	}
 }

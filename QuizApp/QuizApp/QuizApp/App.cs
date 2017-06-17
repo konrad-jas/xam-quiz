@@ -34,7 +34,7 @@ namespace QuizApp.Core
 			Mvx.LazyConstructAndRegisterSingleton<IScoreAssessorFactory, ScoreAssessorFactory>();
 			Mvx.LazyConstructAndRegisterSingleton<IScoreAssessorConfig>(() => new ScoreAssessorConfig(30, 1, 3));
 
-			RegisterAppStart<CategoriesViewModel>();
+			RegisterAppStart<StartingViewModel>();
 		}
 	}
 }

@@ -6,6 +6,5 @@ namespace QuizApp.Core.Models
 	{
 		public int Result { get; set; }
 		public string User { get; set; }
-		public string Category { get; set; }
 	}
 }
