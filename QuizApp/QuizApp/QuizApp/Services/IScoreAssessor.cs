@@ -6,7 +6,7 @@ namespace QuizApp.Core.Services
 	{
 		void StartTimer();
 		event EventHandler OnTimeRanOut;
-		double Progress { get; }
+		double RemainingTime { get; }
 		void StopTimer();
 		int EvaluateScore();
 	}

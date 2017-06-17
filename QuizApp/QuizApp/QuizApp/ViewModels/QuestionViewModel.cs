@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using QuizApp.Core.Services;
 using System.Threading.Tasks;
 using MvvmCross.Core.ViewModels;
@@ -54,6 +55,8 @@ namespace QuizApp.Core.ViewModels
 
 		private int _score;
 		private IScoreAssessor _scoreAssessor;
+		private CancellationTokenSource _cancellationTokenSource;
+		private double _remainingTime;
 
 		public int Score
 		{
@@ -118,6 +121,35 @@ namespace QuizApp.Core.ViewModels
 			_scoreAssessor = _scoreAssessorFactory.GetAssessor();
 			_scoreAssessor.OnTimeRanOut += OnTimeRanOut;
 			_scoreAssessor.StartTimer();
+			InitCountdown();
+		}
+
+		private async void InitCountdown()
+		{
+			_cancellationTokenSource = new CancellationTokenSource();
+			RemainingTime = 1;
+			await Task.Run(UpdateCountdown).ConfigureAwait(false);
+		}
+
+		public double RemainingTime
+		{
+			get => _remainingTime;
+			set => SetProperty(ref _remainingTime, value);
+		}
+
+		private async Task UpdateCountdown()
+		{
+			while (_cancellationTokenSource.IsCancellationRequested == false)
+			{
+				try
+				{
+					await Task.Delay(TimeSpan.FromSeconds(1), _cancellationTokenSource.Token);
+					InvokeOnMainThread(() => RemainingTime = _scoreAssessor.RemainingTime);
+				}
+				catch (TaskCanceledException)
+				{
+				}
+			}
 		}
 
 		private void Cleanup()
@@ -127,6 +159,7 @@ namespace QuizApp.Core.ViewModels
 				_scoreAssessor.StopTimer();
 				_scoreAssessor.OnTimeRanOut -= OnTimeRanOut;
 			}
+			_cancellationTokenSource?.Cancel();
 		}
 
 		private void OnTimeRanOut(object sender, EventArgs e)

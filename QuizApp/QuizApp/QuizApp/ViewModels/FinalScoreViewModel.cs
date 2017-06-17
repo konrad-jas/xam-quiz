@@ -4,6 +4,18 @@ namespace QuizApp.Core.ViewModels
 {
 	public class FinalScoreViewModel : MvxViewModel
 	{
+		public FinalScoreViewModel()
+		{
+			RestartCommand = new MvxCommand(RestartAction);
+		}
+
+		public IMvxCommand RestartCommand { get; }
+
+		private void RestartAction()
+		{
+			ShowViewModel<CategoriesViewModel>();
+		}
+
 		private int _score;
 		public int Score
 		{

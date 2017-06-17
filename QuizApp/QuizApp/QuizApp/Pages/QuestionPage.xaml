@@ -9,9 +9,10 @@
 			<RowDefinition Height="*"></RowDefinition>
 			<RowDefinition Height="50"></RowDefinition>
 		</Grid.RowDefinitions>
-		<StackLayout>
-			<Label Text="{Binding Score, StringFormat='CurrentScore: {0}'}" Margin="10, 10"/>
-			<Label Text="{Binding Question}" Margin="10, 10"/>
+		<StackLayout Spacing="10" Margin="10, 0">
+			<ProgressBar Progress="{Binding RemainingTime}"/>
+			<Label Text="{Binding Score, StringFormat='CurrentScore: {0}'}"/>
+			<Label Text="{Binding Question}"/>
 		</StackLayout>
 		<ListView ItemsSource="{Binding Answers}" Grid.Row="1">
 			<ListView.ItemTemplate>
