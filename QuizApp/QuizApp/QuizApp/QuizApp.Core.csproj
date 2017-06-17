@@ -54,6 +54,7 @@
     <Compile Include="Services\ITriviaServiceProxy.cs" />
     <Compile Include="Services\Impl\ScoreAssessor.cs" />
     <Compile Include="Services\Impl\ScoreAssessorConfig.cs" />
+    <Compile Include="Services\Impl\ScoreAssessorFactory.cs" />
     <Compile Include="ViewModels\CategoriesViewModel.cs" />
     <Compile Include="ViewModels\QuestionViewModel.cs" />
     <Compile Include="Pages\QuestionPage.xaml.cs">

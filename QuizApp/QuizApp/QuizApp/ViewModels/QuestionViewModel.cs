@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using QuizApp.Core.Services;
 using System.Threading.Tasks;
@@ -11,14 +12,15 @@ namespace QuizApp.Core.ViewModels
 	public class QuestionViewModel : MvxViewModel
 	{
 		private readonly IQuestionsService _questionsService;
+		private readonly IScoreAssessorFactory _scoreAssessorFactory;
 
 		private int _categoryId;
 		private string _categoryName;
 
-		public QuestionViewModel(IQuestionsService questionsService)
+		public QuestionViewModel(IQuestionsService questionsService, IScoreAssessorFactory scoreAssessorFactory)
 		{
 			_questionsService = questionsService;
-
+			_scoreAssessorFactory = scoreAssessorFactory;
 			SelectAnswerCommand = new MvxCommand<AnswerPO>(SelectAnswerAction);
 			ConfirmAnswerCommand = new MvxAsyncCommand(ConfirmAnswerAction, AnyAnswerSelected);
 
@@ -51,6 +53,8 @@ namespace QuizApp.Core.ViewModels
 		}
 
 		private int _score;
+		private IScoreAssessor _scoreAssessor;
+
 		public int Score
 		{
 			get => _score;
@@ -60,10 +64,12 @@ namespace QuizApp.Core.ViewModels
 		public IMvxCommand ConfirmAnswerCommand { get; }
 		private async Task ConfirmAnswerAction()
 		{
+			_scoreAssessor.StopTimer();
+			Cleanup();
 			var selectedAnswer = Answers.Single(x => x.Selected);
 			if (selectedAnswer.Correct)
 			{
-				Score++;
+				Score += _scoreAssessor.EvaluateScore();
 
 				await LoadQuestion();
 				ConfirmAnswerCommand.RaiseCanExecuteChanged();
@@ -108,6 +114,25 @@ namespace QuizApp.Core.ViewModels
 			{
 				answer.SelectedCommand = SelectAnswerCommand;
 			}
+			Cleanup();
+			_scoreAssessor = _scoreAssessorFactory.GetAssessor();
+			_scoreAssessor.OnTimeRanOut += OnTimeRanOut;
+			_scoreAssessor.StartTimer();
+		}
+
+		private void Cleanup()
+		{
+			if (_scoreAssessor != null)
+			{
+				_scoreAssessor.StopTimer();
+				_scoreAssessor.OnTimeRanOut -= OnTimeRanOut;
+			}
+		}
+
+		private void OnTimeRanOut(object sender, EventArgs e)
+		{
+			Cleanup();
+			ShowViewModel<FinalScoreViewModel>(new { score = Score });
 		}
 	}
 }
