@@ -38,6 +38,7 @@
     <Compile Include="DTOs\TokenRequestDTO.cs" />
     <Compile Include="DTOs\TokenResetDTO.cs" />
     <Compile Include="Enums\QuestionDifficulty.cs" />
+    <Compile Include="Extensions\TriviaExtensions.cs" />
     <Compile Include="Pages\CategoriesPage.xaml.cs">
       <DependentUpon>CategoriesPage.xaml</DependentUpon>
     </Compile>
