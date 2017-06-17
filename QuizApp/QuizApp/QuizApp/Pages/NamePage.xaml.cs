@@ -9,5 +9,12 @@ namespace QuizApp.Core.Pages
 		{
 			InitializeComponent();
 		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+
+			NameEntry.Focus();
+		}
 	}
 }

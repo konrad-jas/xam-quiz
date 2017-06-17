@@ -1,12 +1,19 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <core:MvxContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:core="clr-namespace:MvvmCross.Forms.Core;assembly=MvvmCross.Forms"
              x:Class="QuizApp.Core.Pages.NamePage">
     <StackLayout>
-		<Label Text="Tell us about yourself."/>
-		<Label Text="How should we call you?"/>
-		<Entry Text="{Binding User}"/>
-		<Button Text="Next" Command="{Binding NextCommand}"/>
+		<Label Text="How should we call you?" 
+			FontSize="20"
+			HorizontalOptions="Center"
+			Margin="0, 20, 0, 10"/>
+		<Entry Text="{Binding User}" 
+			x:Name="NameEntry" 
+			FontSize="22"
+			Margin="60, 0, 60, 10"/>
+		<Button Text="Next" 
+			Command="{Binding NextCommand}"
+			Margin="60, 0"/>
     </StackLayout>
 </core:MvxContentPage>
