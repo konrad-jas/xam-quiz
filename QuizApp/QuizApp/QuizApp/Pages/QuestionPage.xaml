@@ -9,7 +9,10 @@
 			<RowDefinition Height="*"></RowDefinition>
 			<RowDefinition Height="50"></RowDefinition>
 		</Grid.RowDefinitions>
-		<Label Text="{Binding Question}" Margin="10, 10"/>
+		<StackLayout>
+			<Label Text="{Binding Score, StringFormat='CurrentScore: {0}'}" Margin="10, 10"/>
+			<Label Text="{Binding Question}" Margin="10, 10"/>
+		</StackLayout>
 		<ListView ItemsSource="{Binding Answers}" Grid.Row="1">
 			<ListView.ItemTemplate>
 				<DataTemplate>
