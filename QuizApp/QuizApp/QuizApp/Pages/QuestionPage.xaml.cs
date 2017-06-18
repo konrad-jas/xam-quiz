@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace QuizApp.Core.Pages
 {
@@ -8,6 +9,11 @@ namespace QuizApp.Core.Pages
 		public QuestionPage()
 		{
 			InitializeComponent();
+
+			NavigationPage.SetHasBackButton(this, false);
 		}
+
+		protected override bool OnBackButtonPressed()
+			=> true;
 	}
 }

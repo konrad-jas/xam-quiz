@@ -1,26 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<core:MvxContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:core="clr-namespace:MvvmCross.Forms.Core;assembly=MvvmCross.Forms"
-             x:Class="QuizApp.Core.Pages.HighscoresPage">
+<pages:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:pages="clr-namespace:QuizApp.Core.Pages;assembly=QuizApp"
+                     x:Class="QuizApp.Core.Pages.HighscoresPage">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"></RowDefinition>
 			<RowDefinition Height="*"></RowDefinition>
 		</Grid.RowDefinitions>
-		<Label Text="Highscores" Grid.Row="0"/>
+		<Label Text="Top players" HorizontalOptions="Center" Margin="0, 20" FontSize="22" TextColor="Accent"/>
 		<ListView ItemsSource="{Binding Scores}" Grid.Row="1">
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<ViewCell>
 						<StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-						<Label Text="{Binding Place, StringFormat='{0}.'}"/>
-						<Label Text="{Binding Result}"/>
-						<Label Text="{Binding User}"/>
+							<Label Text="{Binding Place, StringFormat='{0}.'}" FontSize="20"/>
+							<Label Text="{Binding Result}" FontSize="20" FontAttributes="Bold" Margin="5, 0"/>
+							<Label Text="{Binding User}" FontSize="20"/>
 						</StackLayout>
 					</ViewCell>
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>
 	</Grid>
-</core:MvxContentPage>  
+</pages:BasePage>

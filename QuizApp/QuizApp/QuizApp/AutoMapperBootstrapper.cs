@@ -13,9 +13,9 @@ namespace QuizApp.Core
 		{
 			Mapper.Initialize(cfg =>
 			{
-				cfg.CreateMap<Score, ScorePO>();
-				cfg.CreateMap<ScorePO, Score>();
-
+				cfg.CreateMap<Score, ScorePO>()
+					.ForMember(dest => dest.Result, opt => opt.MapFrom(src => src.Result.ToString()));
+					
 				cfg.CreateMap<TriviaQuestionDTO, QuestionPO>()
 					.ForMember(dest => dest.Question, opt => opt.MapFrom(src => WebUtility.HtmlDecode(src.Question)))
 					.ForMember(dest => dest.Answers, opt => opt.ResolveUsing<QuestionResolver>());

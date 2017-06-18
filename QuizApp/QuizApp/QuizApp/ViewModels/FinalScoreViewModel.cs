@@ -17,6 +17,7 @@ namespace QuizApp.Core.ViewModels
 			_userService = userService;
 
 			RestartCommand = new MvxAsyncCommand(RestartAction);
+			MenuCommand = new MvxAsyncCommand(MenuAction);
 		}
 
 		public IMvxCommand RestartCommand { get; }
@@ -24,6 +25,13 @@ namespace QuizApp.Core.ViewModels
 		{
 			await _questionsService.WipeMemoryAsync();
 			ShowViewModel<CategoriesViewModel>();
+		}
+
+		public IMvxCommand MenuCommand { get; }
+		private async Task MenuAction()
+		{
+			await _questionsService.WipeMemoryAsync();
+			ShowViewModel<StartingViewModel>();
 		}
 
 		private int _score;
