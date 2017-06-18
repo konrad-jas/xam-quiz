@@ -14,8 +14,10 @@ namespace QuizApp.Droid.Utils
 				matrix.PostRotate(270);
 				using (var rotated = Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, matrix, false))
 				{
-					var pngStream = new MemoryStream()
+					var pngStream = new MemoryStream();
 					await rotated.CompressAsync(Bitmap.CompressFormat.Png, 100, pngStream);
+					await pngStream.FlushAsync();
+					pngStream.Position = 0;
 					return pngStream;
 				}
 			}
