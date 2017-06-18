@@ -22,7 +22,7 @@ namespace QuizApp.Core.Services.Impl
 		public async Task<DetectedEmotionsDTO> PostPhotoAsync(Stream photoStream, CancellationToken token = default(CancellationToken))
 		{
 			var result = await Task.Run(async () => await PostInternal(photoStream, token), token);
-			var emotionResult = JsonConvert.DeserializeObject<List<EmotionResultDTO>>(result).Single();
+			var emotionResult = JsonConvert.DeserializeObject<List<EmotionResultDTO>>(result).First();
 			return emotionResult.DetectedEmotions;
 		}
 

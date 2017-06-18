@@ -42,8 +42,8 @@ namespace QuizApp.Core.ViewModels
 			IsBusy = true;
 			await _questionsService.PrefetchQuestions(_categoryId);
 			await LoadQuestion();
-			_analysisService.StartAnalyzing();
 			IsBusy = false;
+			_analysisService.StartAnalyzing();
 		}
 
 		private bool _isBusy;

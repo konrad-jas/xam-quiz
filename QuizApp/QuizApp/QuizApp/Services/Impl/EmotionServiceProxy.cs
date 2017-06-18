@@ -16,7 +16,7 @@ namespace QuizApp.Core.Services.Impl
 
 		public async Task<DetectedEmotionsDTO> PostPhotoAsync(Stream photoStream, CancellationToken token = default(CancellationToken))
 		{
-			return await FetchAsync(async () => await _client.PostPhotoAsync(photoStream, token), () => null).ConfigureAwait(false);
+			return await FetchAsync(async () => await _client.PostPhotoAsync(photoStream, token), () => new DetectedEmotionsDTO()).ConfigureAwait(false);
 		}
 	}
 }

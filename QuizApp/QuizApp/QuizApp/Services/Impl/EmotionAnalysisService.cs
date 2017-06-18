@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using QuizApp.Core.DTOs;
 using QuizApp.Core.Enums;
+using Xamarin.Forms;
 
 namespace QuizApp.Core.Services.Impl
 {
@@ -12,7 +13,7 @@ namespace QuizApp.Core.Services.Impl
 		private readonly IEmotionServiceProxy _emotionServiceProxy;
 		private readonly IToastService _toastService;
 		private CancellationTokenSource _cancellationTokenSource;
-		private const double DelayTimeInS = 60;
+		private const double DelayTimeInS = 45;
 
 		public EmotionAnalysisService(ICameraService cameraService, IEmotionServiceProxy emotionServiceProxy, IToastService toastService)
 		{
@@ -31,15 +32,20 @@ namespace QuizApp.Core.Services.Impl
 			{
 				try
 				{
-					var photo = await _cameraService.TakePhoto();
-					var emotions = await _emotionServiceProxy.PostPhotoAsync(photo, _cancellationTokenSource.Token);
-					AnalyzeEmotions(emotions);
-					await Task.Delay(TimeSpan.FromSeconds(DelayTimeInS), _cancellationTokenSource.Token);
+					while (_cancellationTokenSource != null && _cancellationTokenSource.IsCancellationRequested == false)
+					{
+						await Task.Delay(TimeSpan.FromSeconds(DelayTimeInS), _cancellationTokenSource.Token);
+						using (var photo = await _cameraService.TakePhoto())
+						{
+							var emotions = await _emotionServiceProxy.PostPhotoAsync(photo, _cancellationTokenSource.Token);
+							AnalyzeEmotions(emotions);
+						}
+					}
 				}
 				catch (TaskCanceledException)
 				{
 				}
-			});
+			}).ConfigureAwait(false);
 		}
 
 		private void AnalyzeEmotions(DetectedEmotionsDTO emotions)
@@ -48,7 +54,7 @@ namespace QuizApp.Core.Services.Impl
 			var positiveEmotionsSum = emotions.Contempt + emotions.Happiness;
 			if (positiveEmotionsSum > negativeEmotionsSum)
 				LowerDifficulty();
-			else
+			else if(negativeEmotionsSum > positiveEmotionsSum)
 				RaiseDifficulty();
 		}
 
@@ -57,7 +63,7 @@ namespace QuizApp.Core.Services.Impl
 			if (CurrentDifficulty < QuestionDifficulty.Hard)
 			{
 				CurrentDifficulty++;
-				_toastService.ShowToast("Question difficulty raised!");
+				ShowToast("Question difficulty raised!");
 			}
 		}
 
@@ -66,8 +72,13 @@ namespace QuizApp.Core.Services.Impl
 			if (CurrentDifficulty > QuestionDifficulty.Easy)
 			{
 				CurrentDifficulty--;
-				_toastService.ShowToast("Question difficulty lowered!");
+				ShowToast("Question difficulty lowered!");
 			}
+		}
+
+		private void ShowToast(string text)
+		{
+			Device.BeginInvokeOnMainThread(() => _toastService.ShowToast(text));
 		}
 
 		public void StopAnalyzing()
