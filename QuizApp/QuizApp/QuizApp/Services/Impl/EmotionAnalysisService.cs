@@ -54,9 +54,9 @@ namespace QuizApp.Core.Services.Impl
 			var negativeEmotionsSum = emotions.Anger + emotions.Sadness;
 			var positiveEmotionsSum = emotions.Contempt + emotions.Happiness;
 			if (positiveEmotionsSum > negativeEmotionsSum)
-				LowerDifficulty();
-			else if(negativeEmotionsSum > positiveEmotionsSum)
 				RaiseDifficulty();
+			else if(negativeEmotionsSum > positiveEmotionsSum)
+				LowerDifficulty();
 		}
 
 		private void RaiseDifficulty()
