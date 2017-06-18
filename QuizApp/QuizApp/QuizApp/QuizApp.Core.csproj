@@ -55,6 +55,7 @@
     <Compile Include="POs\CategoryPO.cs" />
     <Compile Include="POs\ScorePO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ICameraService.cs" />
     <Compile Include="Services\ICategoriesService.cs" />
     <Compile Include="Services\IHighscoresService.cs" />
     <Compile Include="Services\Impl\CategoriesService.cs" />
