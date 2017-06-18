@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<core:MvxContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<pages:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:core="clr-namespace:MvvmCross.Forms.Core;assembly=MvvmCross.Forms"
+             xmlns:pages="clr-namespace:QuizApp.Core.Pages;assembly=QuizApp"
              x:Class="QuizApp.Core.Pages.FinalScorePage">
 	<StackLayout HorizontalOptions="Center" VerticalOptions="Center">
 		<StackLayout IsVisible="{Binding MadeItToHighscores}">
@@ -10,5 +10,7 @@
 		</StackLayout>
 		<Label Text="{Binding Score, StringFormat='Your final score is {0}'}" FontSize="20" FontAttributes="Bold"/>
 		<Button Text="Try again" Command="{Binding RestartCommand}"/>
+		<Button Text="Back to menu" Command="{Binding MenuCommand}"/>
 	</StackLayout>
-</core:MvxContentPage>
+</pages:BasePage>
+

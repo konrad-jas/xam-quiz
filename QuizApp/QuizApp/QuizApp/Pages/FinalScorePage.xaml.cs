@@ -9,5 +9,8 @@ namespace QuizApp.Core.Pages
 		{
 			InitializeComponent();
 		}
+
+		protected override bool OnBackButtonPressed()
+			=> true;
 	}
 }

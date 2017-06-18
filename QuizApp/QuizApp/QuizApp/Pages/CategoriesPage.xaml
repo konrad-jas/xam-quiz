@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<core:MvxContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<pages:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:core="clr-namespace:MvvmCross.Forms.Core;assembly=MvvmCross.Forms"
+             xmlns:pages="clr-namespace:QuizApp.Core.Pages;assembly=QuizApp"
              x:Class="QuizApp.Core.Pages.CategoriesPage">
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"></RowDefinition>
-			<RowDefinition Height="*"></RowDefinition>
-			<RowDefinition Height="50"></RowDefinition>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="50"/>
 		</Grid.RowDefinitions>
-		<Label Text="Categories" Margin="10, 10"/>
+		<Label Text="Select the quiz category" FontSize="20" Margin="10, 10"/>
 		<ListView ItemsSource="{Binding Categories}" Grid.Row="1">
 			<ListView.ItemTemplate>
 				<DataTemplate>
@@ -23,4 +23,4 @@
 		</ListView>
 		<Button Grid.Row="2" Text="Select category" Command="{Binding ConfirmCategoryCommand}"/>
 	</Grid>
-</core:MvxContentPage>
+</pages:BasePage>

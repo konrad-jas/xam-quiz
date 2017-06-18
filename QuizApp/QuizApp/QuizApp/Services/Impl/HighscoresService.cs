@@ -16,9 +16,13 @@ namespace QuizApp.Core.Services.Impl
 		{
 			var scores = await GetTopScores();
 			var mappedScores = Mapper.Map<IList<ScorePO>>(scores);
-			for (var i = 0; i < mappedScores.Count; ++i)
+			for (var i = 0; i < Places; ++i)
 			{
-				mappedScores[i].Place = i + 1;
+				var place = i + 1;
+				if (mappedScores.Count > i)
+					mappedScores[i].Place = place;
+				else
+					mappedScores.Add(new ScorePO { Place = place, Result = "-", User = "-"});
 			}
 			return mappedScores;
 		}
