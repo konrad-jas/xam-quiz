@@ -84,7 +84,7 @@ namespace QuizApp.Core.Services.Impl
 
 		public void StopAnalyzing()
 		{
-			_cancellationTokenSource.Cancel();
+			_cancellationTokenSource?.Cancel();
 			_cancellationTokenSource = null;
 			CurrentDifficulty = QuestionDifficulty.Medium;
 		}
