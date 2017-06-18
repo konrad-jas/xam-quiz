@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using QuizApp.Core.DTOs;
 
@@ -13,9 +14,9 @@ namespace QuizApp.Core.Services.Impl
 			_client = client;
 		}
 
-		public async Task<DetectedEmotionsDTO> PostPhotoAsync(Stream photoStream)
+		public async Task<DetectedEmotionsDTO> PostPhotoAsync(Stream photoStream, CancellationToken token = default(CancellationToken))
 		{
-			return await FetchAsync(async () => await _client.PostPhotoAsync(photoStream), () => null).ConfigureAwait(false);
+			return await FetchAsync(async () => await _client.PostPhotoAsync(photoStream, token), () => null).ConfigureAwait(false);
 		}
 	}
 }

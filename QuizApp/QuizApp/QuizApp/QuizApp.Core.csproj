@@ -40,6 +40,8 @@
     <Compile Include="DTOs\EmotionResultDTO.cs" />
     <Compile Include="DTOs\TokenRequestDTO.cs" />
     <Compile Include="DTOs\TokenResetDTO.cs" />
+    <Compile Include="Services\Impl\EmotionAnalysisService.cs" />
+    <Compile Include="Services\IEmotionAnalysisService.cs" />
     <Compile Include="Services\Impl\EmotionRecognitionClient.cs" />
     <Compile Include="Enums\QuestionDifficulty.cs" />
     <Compile Include="Models\Score.cs" />
