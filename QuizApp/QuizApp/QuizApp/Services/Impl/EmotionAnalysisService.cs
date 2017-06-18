@@ -13,7 +13,7 @@ namespace QuizApp.Core.Services.Impl
 		private readonly IEmotionServiceProxy _emotionServiceProxy;
 		private readonly IToastService _toastService;
 		private CancellationTokenSource _cancellationTokenSource;
-		private const double DelayTimeInS = 45;
+		private const double DelayTimeInS = 30;
 
 		public EmotionAnalysisService(ICameraService cameraService, IEmotionServiceProxy emotionServiceProxy, IToastService toastService)
 		{

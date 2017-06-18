@@ -32,7 +32,7 @@ namespace QuizApp.Core
 			Mvx.LazyConstructAndRegisterSingleton(() => RestService.For<ITriviaServiceClient>(client));
 			Mvx.LazyConstructAndRegisterSingleton<ITriviaServiceProxy, TriviaServiceProxy>();
 			Mvx.LazyConstructAndRegisterSingleton<IScoreAssessorFactory, ScoreAssessorFactory>();
-			Mvx.LazyConstructAndRegisterSingleton<IScoreAssessorConfig>(() => new ScoreAssessorConfig(30, 1, 3));
+			Mvx.LazyConstructAndRegisterSingleton<IScoreAssessorConfig>(() => new ScoreAssessorConfig(15, 1, 3));
 
 
 			var azureClient = new HttpClient(new NativeMessageHandler())
