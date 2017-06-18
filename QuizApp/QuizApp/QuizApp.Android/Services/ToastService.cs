@@ -7,7 +7,7 @@ namespace QuizApp.Droid.Services
 	{
 		public void ShowToast(string text)
 		{
-			Toast.MakeText(Xamarin.Forms.Forms.Context, text, ToastLength.Short);
+			Toast.MakeText(Xamarin.Forms.Forms.Context, text, ToastLength.Short).Show();
 		}
 	}
 }
