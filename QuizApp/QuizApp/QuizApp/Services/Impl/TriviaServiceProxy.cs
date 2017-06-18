@@ -1,11 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using MvvmCross.Platform.Platform;
+﻿using System.Threading.Tasks;
 using QuizApp.Core.DTOs;
 
 namespace QuizApp.Core.Services.Impl
 {
-	public class TriviaServiceProxy : ITriviaServiceProxy
+	public class TriviaServiceProxy : BaseRestProxy, ITriviaServiceProxy
 	{
 		private readonly ITriviaServiceClient _triviaServiceClient;
 
@@ -30,20 +28,6 @@ namespace QuizApp.Core.Services.Impl
 		{
 			return await FetchAsync(async () => await _triviaServiceClient.ResetTokenAsync(token),
 				() => null).ConfigureAwait(false);
-		}
-
-		private async Task<T> FetchAsync<T>(Func<Task<T>> fetchFunc, Func<T> fallbackFunc)
-		{
-			try
-			{
-				return await fetchFunc().ConfigureAwait(false);
-			}
-			catch (Exception e)
-			{
-				MvxTrace.TaggedError("trivia service", $"{e}");
-			}
-
-			return fallbackFunc();
 		}
 	}
 }

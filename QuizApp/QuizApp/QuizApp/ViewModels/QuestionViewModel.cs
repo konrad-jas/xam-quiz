@@ -14,14 +14,16 @@ namespace QuizApp.Core.ViewModels
 	{
 		private readonly IQuestionsService _questionsService;
 		private readonly IScoreAssessorFactory _scoreAssessorFactory;
+		private readonly IEmotionAnalysisService _analysisService;
 
 		private int _categoryId;
 		private string _categoryName;
 
-		public QuestionViewModel(IQuestionsService questionsService, IScoreAssessorFactory scoreAssessorFactory)
+		public QuestionViewModel(IQuestionsService questionsService, IScoreAssessorFactory scoreAssessorFactory, IEmotionAnalysisService analysisService)
 		{
 			_questionsService = questionsService;
 			_scoreAssessorFactory = scoreAssessorFactory;
+			_analysisService = analysisService;
 			SelectAnswerCommand = new MvxCommand<AnswerPO>(SelectAnswerAction);
 			ConfirmAnswerCommand = new MvxAsyncCommand(ConfirmAnswerAction, AnyAnswerSelected);
 
@@ -40,6 +42,7 @@ namespace QuizApp.Core.ViewModels
 			IsBusy = true;
 			await _questionsService.PrefetchQuestions(_categoryId);
 			await LoadQuestion();
+			_analysisService.StartAnalyzing();
 			IsBusy = false;
 		}
 
@@ -105,7 +108,7 @@ namespace QuizApp.Core.ViewModels
 			}
 			else
 			{
-				ShowViewModel<FinalScoreViewModel>(new { score = Score });
+				ShowFinalScore();
 			}
 		}
 
@@ -132,7 +135,7 @@ namespace QuizApp.Core.ViewModels
 
 		private async Task LoadQuestion()
 		{
-			var question = await _questionsService.GetQuestionAsync(_categoryId, QuestionDifficulty.Medium);
+			var question = await _questionsService.GetQuestionAsync(_categoryId, _analysisService.CurrentDifficulty);
 			if (question == null)
 				return;
 
@@ -201,8 +204,14 @@ namespace QuizApp.Core.ViewModels
 			else
 			{
 				Cleanup();
-				ShowViewModel<FinalScoreViewModel>(new { score = Score });
+				ShowFinalScore();
 			}
+		}
+
+		private void ShowFinalScore()
+		{
+			_analysisService.StopAnalyzing();
+			ShowViewModel<FinalScoreViewModel>(new { score = Score });
 		}
 	}
 }
