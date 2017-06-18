@@ -8,15 +8,15 @@
 			<RowDefinition Height="Auto"></RowDefinition>
 			<RowDefinition Height="*"></RowDefinition>
 		</Grid.RowDefinitions>
-		<Label Text="Top players" HorizontalOptions="Center" Margin="0, 20" FontSize="20"/>
+		<Label Text="Top players" HorizontalOptions="Center" Margin="0, 20" FontSize="22" TextColor="Accent"/>
 		<ListView ItemsSource="{Binding Scores}" Grid.Row="1">
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<ViewCell>
 						<StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-							<Label Text="{Binding Place, StringFormat='{0}.'}" FontSize="22"/>
-							<Label Text="{Binding Result}" FontSize="22" FontAttributes="Bold" Margin="5, 0"/>
-							<Label Text="{Binding User}" FontSize="22"/>
+							<Label Text="{Binding Place, StringFormat='{0}.'}" FontSize="20"/>
+							<Label Text="{Binding Result}" FontSize="20" FontAttributes="Bold" Margin="5, 0"/>
+							<Label Text="{Binding User}" FontSize="20"/>
 						</StackLayout>
 					</ViewCell>
 				</DataTemplate>

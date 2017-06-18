@@ -36,6 +36,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AutoMapperBootstrapper.cs" />
+    <Compile Include="Converters\LivesToStringConverter.cs" />
+    <Compile Include="Converters\PlaceToStringConverter.cs" />
     <Compile Include="DTOs\TokenRequestDTO.cs" />
     <Compile Include="DTOs\TokenResetDTO.cs" />
     <Compile Include="Enums\QuestionDifficulty.cs" />

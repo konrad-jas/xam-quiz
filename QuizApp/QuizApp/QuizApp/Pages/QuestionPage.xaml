@@ -2,20 +2,24 @@
 <pages:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pages="clr-namespace:QuizApp.Core.Pages;assembly=QuizApp"
+			 xmlns:converters="clr-namespace:QuizApp.Core.Converters;assembly=QuizApp"
              x:Class="QuizApp.Core.Pages.QuestionPage">
+	<pages:BasePage.Resources>
+		<ResourceDictionary>
+			<converters:LivesToStringConverter x:Key="LivesToStringConverter"/>
+		</ResourceDictionary>
+	</pages:BasePage.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
 			<RowDefinition Height="*"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
 			<RowDefinition Height="50"></RowDefinition>
 		</Grid.RowDefinitions>
-		<StackLayout Spacing="10" Margin="10, 0">
-			<ProgressBar Progress="{Binding RemainingTime}"/>
-			<Label Text="{Binding Lives, StringFormat='Lives: {0}'}"/>
-			<Label Text="{Binding Score, StringFormat='CurrentScore: {0}'}"/>
-			<Label Text="{Binding Question}"/>
-		</StackLayout>
-		<ListView ItemsSource="{Binding Answers}" Grid.Row="1">
+		<ProgressBar Progress="{Binding RemainingTime}" Margin="20, 10"/>
+		<Label Text="{Binding Question}" Grid.Row="1" Margin="20, 10, 20, 10" FontSize="18"/>
+		<ListView ItemsSource="{Binding Answers}" Grid.Row="2" Margin="10, 0">
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<TextCell Text="{Binding Answer}"
@@ -26,8 +30,24 @@
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>
-		<Button Grid.Row="2" Text="Select answer" Command="{Binding ConfirmAnswerCommand}"/>
-		<Grid Grid.RowSpan="3"
+		<Grid Grid.Row="3">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Label Text="{Binding Score}"
+			       Margin="20, 0"
+			       FontSize="24"
+			       HorizontalOptions="Start"
+				   TextColor="Accent"/>
+			<Label Text="{Binding Lives, Converter={StaticResource LivesToStringConverter}}"
+			       Margin="20, 0"
+			       HorizontalOptions="End"
+			       FontSize="24"
+			       Grid.Column="1"/>
+		</Grid>
+		<Button Grid.Row="4" Text="Select answer" Command="{Binding ConfirmAnswerCommand}"/>
+		<Grid Grid.RowSpan="5"
 			IsVisible="{Binding IsBusy}"
 			BackgroundColor="White">
 			<Grid.RowDefinitions>

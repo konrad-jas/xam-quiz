@@ -2,13 +2,24 @@
 <pages:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pages="clr-namespace:QuizApp.Core.Pages;assembly=QuizApp"
+             xmlns:converters="clr-namespace:QuizApp.Core.Converters;assembly=QuizApp"
              x:Class="QuizApp.Core.Pages.FinalScorePage">
-	<StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-		<StackLayout IsVisible="{Binding MadeItToHighscores}">
-			<Label Text="Congratulations!"/>
-			<Label Text="{Binding Place, StringFormat='You made it to {0} place in the highscores!'}"/>
+	<pages:BasePage.Resources>
+		<ResourceDictionary>
+			<converters:PlaceToStringConverter x:Key="PlaceToStringConverter"/>
+		</ResourceDictionary>
+	</pages:BasePage.Resources>
+	<StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+		<StackLayout Spacing="10" Margin="0, 0, 0, 10">
+			<Label Text="{Binding Score, StringFormat='You scored {0} points!'}" 
+				   FontSize="18"
+				   FontAttributes="Bold"
+				   HorizontalOptions="Center"/>
+			<Label Text="{Binding Place, Converter={StaticResource PlaceToStringConverter}, StringFormat='And reached {0} place in the highscores!'}" 
+				IsVisible="{Binding MadeItToHighscores}"
+				FontSize="16"
+				HorizontalOptions="Center"/>
 		</StackLayout>
-		<Label Text="{Binding Score, StringFormat='Your final score is {0}'}" FontSize="20" FontAttributes="Bold"/>
 		<Button Text="Try again" Command="{Binding RestartCommand}"/>
 		<Button Text="Back to menu" Command="{Binding MenuCommand}"/>
 	</StackLayout>

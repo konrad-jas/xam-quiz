@@ -3,8 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pages="clr-namespace:QuizApp.Core.Pages;assembly=QuizApp"
              x:Class="QuizApp.Core.Pages.StartingPage">
-	<StackLayout VerticalOptions="Center">
-		<Button Text="Let's go" Command="{Binding StartCommand}" Margin="60, 5"/>
-		<Button Text="Highscores" Command="{Binding HighscoresCommand}" Margin="60, 5"/>
-	</StackLayout>
+	<Grid>
+		<StackLayout VerticalOptions="Center" Spacing="10">
+			<Label Text="Q" FontSize="200" 
+			       VerticalOptions="Start" 
+			       HorizontalOptions="Center" 
+			       Margin="0, 0, 0, 10"
+			       TextColor="Accent"/>
+			<Button Text="Let's go" Command="{Binding StartCommand}" Margin="60, 0"/>
+			<Button Text="Highscores" Command="{Binding HighscoresCommand}" Margin="60, 0"/>
+		</StackLayout>
+	</Grid>
 </pages:BasePage>
