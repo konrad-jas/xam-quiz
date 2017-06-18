@@ -7,6 +7,7 @@
 	<pages:BasePage.Resources>
 		<ResourceDictionary>
 			<converters:LivesToStringConverter x:Key="LivesToStringConverter"/>
+			<converters:HighlightToColorConverter x:Key="HighlightToColorConverter"/> 
 		</ResourceDictionary>
 	</pages:BasePage.Resources>
 	<Grid>
@@ -25,7 +26,7 @@
 					<TextCell Text="{Binding Answer}"
 							Command="{Binding SelectedCommand}"
 							CommandParameter="{Binding }"
-							TextColor="Black">
+							TextColor="{Binding Highlight, Converter={StaticResource HighlightToColorConverter}}">
 					</TextCell>
 				</DataTemplate>
 			</ListView.ItemTemplate>

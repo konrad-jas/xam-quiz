@@ -98,6 +98,7 @@
       <DependentUpon>FinalScorePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\StartingViewModel.cs" />
+    <Compile Include="Converters\HighlightToColorConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AutoMapper, Version=6.1.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">

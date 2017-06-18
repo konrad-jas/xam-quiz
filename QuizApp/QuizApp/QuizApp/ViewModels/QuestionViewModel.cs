@@ -88,6 +88,10 @@ namespace QuizApp.Core.ViewModels
 			_scoreAssessor.StopTimer();
 			Cleanup();
 
+			var correctAnswer = Answers.Single(x => x.Correct);
+			correctAnswer.Highlight = true;
+			await Task.Delay(1000);
+
 			var selectedAnswer = Answers.Single(x => x.Selected);
 			if (selectedAnswer.Correct)
 			{
