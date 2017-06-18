@@ -202,6 +202,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CameraService.cs" />
     <Compile Include="NativeImpl\PhotoCallback.cs" />
+    <Compile Include="Services\ToastService.cs" />
     <Compile Include="SplashScreen.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="LinkerPleaseInclude.cs" />
