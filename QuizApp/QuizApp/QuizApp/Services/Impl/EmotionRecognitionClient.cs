@@ -1,7 +1,11 @@
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using QuizApp.Core.DTOs;
 
 namespace QuizApp.Core.Services.Impl
 {
@@ -14,9 +18,11 @@ namespace QuizApp.Core.Services.Impl
 			_client = client;
 		}
 
-		public async Task<string> PostPhotoAsync(Stream photoStream)
+		public async Task<DetectedEmotionsDTO> PostPhotoAsync(Stream photoStream)
 		{
-			return await Task.Run(async () => await PostInternal(photoStream));
+			var result = await Task.Run(async () => await PostInternal(photoStream));
+			var emotionResult = JsonConvert.DeserializeObject<List<EmotionResultDTO>>(result).Single();
+			return emotionResult.DetectedEmotions;
 		}
 
 		private async Task<string> PostInternal(Stream photoStream)

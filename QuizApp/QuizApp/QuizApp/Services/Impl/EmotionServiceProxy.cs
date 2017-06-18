@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
+using QuizApp.Core.DTOs;
 
 namespace QuizApp.Core.Services.Impl
 {
@@ -12,7 +13,7 @@ namespace QuizApp.Core.Services.Impl
 			_client = client;
 		}
 
-		public async Task<string> PostPhotoAsync(Stream photoStream)
+		public async Task<DetectedEmotionsDTO> PostPhotoAsync(Stream photoStream)
 		{
 			return await FetchAsync(async () => await _client.PostPhotoAsync(photoStream), () => null).ConfigureAwait(false);
 		}

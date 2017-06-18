@@ -36,6 +36,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AutoMapperBootstrapper.cs" />
+    <Compile Include="DTOs\DetectedEmotionsDTO.cs" />
+    <Compile Include="DTOs\EmotionResultDTO.cs" />
     <Compile Include="DTOs\TokenRequestDTO.cs" />
     <Compile Include="DTOs\TokenResetDTO.cs" />
     <Compile Include="Services\Impl\EmotionRecognitionClient.cs" />
