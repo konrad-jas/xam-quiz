@@ -34,6 +34,14 @@ namespace QuizApp.Core
 			Mvx.LazyConstructAndRegisterSingleton<IScoreAssessorFactory, ScoreAssessorFactory>();
 			Mvx.LazyConstructAndRegisterSingleton<IScoreAssessorConfig>(() => new ScoreAssessorConfig(30, 1, 3));
 
+
+			var azureClient = new HttpClient(new NativeMessageHandler())
+			{
+				DefaultRequestHeaders = {{"Ocp-Apim-Subscription-Key", ":^)"}},
+				BaseAddress = new Uri(ExternalServicesURIs.CognitiveAPIBaseURI)
+			};
+			Mvx.LazyConstructAndRegisterSingleton<IEmotionRecognitionClient>(() => new EmotionRecognitionClient(azureClient));
+			Mvx.LazyConstructAndRegisterSingleton<IEmotionServiceProxy, EmotionServiceProxy>();
 			RegisterAppStart<StartingViewModel>();
 		}
 	}

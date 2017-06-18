@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 
 namespace QuizApp.Core.Services
 {
 	public interface ICameraService
 	{
-		Task<byte[]> TakePhoto();
+		Task<Stream> TakePhoto();
 	}
 }

@@ -207,6 +207,7 @@
     <Compile Include="LinkerPleaseInclude.cs" />
     <Compile Include="DebugTrace.cs" />
     <Compile Include="QuizAppActivity.cs" />
+    <Compile Include="Utils\ImageUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
