@@ -20,11 +20,12 @@ namespace QuizApp.Core.Services.Impl
 			_cameraService = cameraService;
 			_emotionServiceProxy = emotionServiceProxy;
 			_toastService = toastService;
+			Enabled = true;
 		}
 
 		public async void StartAnalyzing()
 		{
-			if(_cancellationTokenSource != null)
+			if(_cancellationTokenSource != null || Enabled == false)
 				return;
 
 			_cancellationTokenSource = new CancellationTokenSource();
@@ -89,5 +90,6 @@ namespace QuizApp.Core.Services.Impl
 		}
 
 		public QuestionDifficulty CurrentDifficulty { get; private set; } = QuestionDifficulty.Medium;
+		public bool Enabled { get; set; }
 	}
 }

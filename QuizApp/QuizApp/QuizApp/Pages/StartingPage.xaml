@@ -2,7 +2,13 @@
 <pages:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pages="clr-namespace:QuizApp.Core.Pages;assembly=QuizApp"
+             xmlns:converters="clr-namespace:QuizApp.Core.Converters;assembly=QuizApp"
              x:Class="QuizApp.Core.Pages.StartingPage">
+	<pages:BasePage.Resources>
+		<ResourceDictionary>
+			<converters:AnalysisEnabledTextConverter x:Key="AnalysisEnabledTextConverter"/>
+		</ResourceDictionary>
+	</pages:BasePage.Resources>
 	<Grid>
 		<StackLayout VerticalOptions="Center" Spacing="10">
 			<Label Text="Q" FontSize="200" 
@@ -12,6 +18,10 @@
 			       TextColor="Accent"/>
 			<Button Text="Let's go" Command="{Binding StartCommand}" Margin="60, 0"/>
 			<Button Text="Highscores" Command="{Binding HighscoresCommand}" Margin="60, 0"/>
+			<Button Text="{Binding AnalysisEnabled, Converter={StaticResource AnalysisEnabledTextConverter}}" 
+							Command="{Binding ToggleEmotionAnalysisCommand}" 
+							Margin="60, 0">
+			</Button>
 		</StackLayout>
 	</Grid>
 </pages:BasePage>

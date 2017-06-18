@@ -7,5 +7,6 @@ namespace QuizApp.Core.Services
 		void StartAnalyzing();
 		void StopAnalyzing();
 		QuestionDifficulty CurrentDifficulty { get; }
+		bool Enabled { get; set; }
 	}
 }

@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AutoMapperBootstrapper.cs" />
+    <Compile Include="Converters\AnalysisEnabledTextConverter.cs" />
     <Compile Include="Converters\LivesToStringConverter.cs" />
     <Compile Include="Converters\PlaceToStringConverter.cs" />
     <Compile Include="DTOs\DetectedEmotionsDTO.cs" />
