@@ -38,8 +38,13 @@
     <Compile Include="AutoMapperBootstrapper.cs" />
     <Compile Include="Converters\LivesToStringConverter.cs" />
     <Compile Include="Converters\PlaceToStringConverter.cs" />
+    <Compile Include="DTOs\DetectedEmotionsDTO.cs" />
+    <Compile Include="DTOs\EmotionResultDTO.cs" />
     <Compile Include="DTOs\TokenRequestDTO.cs" />
     <Compile Include="DTOs\TokenResetDTO.cs" />
+    <Compile Include="Services\Impl\EmotionAnalysisService.cs" />
+    <Compile Include="Services\IEmotionAnalysisService.cs" />
+    <Compile Include="Services\Impl\EmotionRecognitionClient.cs" />
     <Compile Include="Enums\QuestionDifficulty.cs" />
     <Compile Include="Models\Score.cs" />
     <Compile Include="Pages\BasePage.cs" />
@@ -60,8 +65,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ICameraService.cs" />
     <Compile Include="Services\ICategoriesService.cs" />
+    <Compile Include="Services\IEmotionRecognitionClient.cs" />
+    <Compile Include="Services\IEmotionServiceProxy.cs" />
     <Compile Include="Services\IHighscoresService.cs" />
+    <Compile Include="Services\Impl\BaseRestProxy.cs" />
     <Compile Include="Services\Impl\CategoriesService.cs" />
+    <Compile Include="Services\Impl\EmotionServiceProxy.cs" />
     <Compile Include="Services\Impl\HighscoresService.cs" />
     <Compile Include="Services\Impl\TokenService.cs" />
     <Compile Include="Services\Impl\TriviaServiceProxy.cs" />
@@ -69,6 +78,7 @@
     <Compile Include="Services\IScoreAssessor.cs" />
     <Compile Include="Services\IScoreAssessorConfig.cs" />
     <Compile Include="Services\IScoreAssessorFactory.cs" />
+    <Compile Include="Services\IToastService.cs" />
     <Compile Include="Services\ITokenService.cs" />
     <Compile Include="Services\ITriviaServiceProxy.cs" />
     <Compile Include="Services\Impl\ScoreAssessor.cs" />

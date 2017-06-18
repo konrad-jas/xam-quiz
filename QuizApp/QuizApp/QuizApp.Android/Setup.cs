@@ -18,6 +18,7 @@ namespace QuizApp.Droid
 		protected override IMvxApplication CreateApp()
 		{
 			Mvx.LazyConstructAndRegisterSingleton<ICameraService, CameraService>();
+			Mvx.LazyConstructAndRegisterSingleton<IToastService, ToastService>();
 			return new Core.App();
 		}
 
