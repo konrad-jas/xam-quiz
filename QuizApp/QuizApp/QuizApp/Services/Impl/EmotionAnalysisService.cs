@@ -13,7 +13,7 @@ namespace QuizApp.Core.Services.Impl
 		private readonly IEmotionServiceProxy _emotionServiceProxy;
 		private readonly IToastService _toastService;
 		private CancellationTokenSource _cancellationTokenSource;
-		private const double DelayTimeInS = 30;
+		private const double DelayTimeInS = 10;
 
 		public EmotionAnalysisService(ICameraService cameraService, IEmotionServiceProxy emotionServiceProxy, IToastService toastService)
 		{
@@ -25,7 +25,7 @@ namespace QuizApp.Core.Services.Impl
 
 		public async void StartAnalyzing()
 		{
-			if(_cancellationTokenSource != null || Enabled == false)
+			if (_cancellationTokenSource != null || Enabled == false)
 				return;
 
 			_cancellationTokenSource = new CancellationTokenSource();
@@ -38,6 +38,7 @@ namespace QuizApp.Core.Services.Impl
 						await Task.Delay(TimeSpan.FromSeconds(DelayTimeInS), _cancellationTokenSource.Token);
 						using (var photo = await _cameraService.TakePhoto())
 						{
+							ShowToast("Photo taken!");
 							var emotions = await _emotionServiceProxy.PostPhotoAsync(photo, _cancellationTokenSource.Token);
 							AnalyzeEmotions(emotions);
 						}
@@ -51,21 +52,32 @@ namespace QuizApp.Core.Services.Impl
 
 		private void AnalyzeEmotions(DetectedEmotionsDTO emotions)
 		{
+			var anger = $"Anger: {emotions.Anger.ToString("F5")}";
+			var sadness = $"Sadness: {emotions.Sadness.ToString("F5")}";
+			var contempt = $"Contempt: {emotions.Contempt.ToString("F5")}";
+			var happiness = $"Happiness: {emotions.Happiness.ToString("F5")}";
+
+			ShowToast($"{anger}\n{sadness}\n{contempt}\n{happiness}");
+
 			var negativeEmotionsSum = emotions.Anger + emotions.Sadness;
 			var positiveEmotionsSum = emotions.Contempt + emotions.Happiness;
 			if (positiveEmotionsSum > negativeEmotionsSum)
 				RaiseDifficulty();
-			else if(negativeEmotionsSum > positiveEmotionsSum)
+			else
 				LowerDifficulty();
 		}
 
 		private void RaiseDifficulty()
 		{
 			if (CurrentDifficulty < QuestionDifficulty.Hard)
-			{
-				CurrentDifficulty++;
-				ShowToast("Question difficulty raised!");
-			}
+				if (CurrentDifficulty < QuestionDifficulty.Hard)
+				{
+					CurrentDifficulty++;
+					Task.Delay(2000).ContinueWith((task) =>
+					{
+						ShowToast("Question difficulty raised!");
+					});
+				}
 		}
 
 		private void LowerDifficulty()
@@ -73,7 +85,10 @@ namespace QuizApp.Core.Services.Impl
 			if (CurrentDifficulty > QuestionDifficulty.Easy)
 			{
 				CurrentDifficulty--;
-				ShowToast("Question difficulty lowered!");
+				Task.Delay(2000).ContinueWith((task) =>
+				{
+					ShowToast("Question difficulty lowered!");
+				});
 			}
 		}
 
